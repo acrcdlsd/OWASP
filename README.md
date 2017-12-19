@@ -1,5 +1,5 @@
-# OWASP
-OWASP資料の日本語訳
+# OWASP Mobile Top 10 - 2016
+OWASP　Mobile Top 10 - 2016資料の日本語訳
 
 ## 日本語版翻訳
  - 三井　宏弥（株式会社ラック）
