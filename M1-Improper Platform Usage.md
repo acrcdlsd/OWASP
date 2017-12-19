@@ -1,4 +1,4 @@
-# M1：不適切なプラットフォームの利用
+# M1：不適切なプラットフォームの利
 
 | <center>脅威エージェント</center> | <center>攻撃経路</center> | <center>セキュリティ上の弱点</center> || <center>技術的な影響</center> | <center>ビジネスへの影響</center> |
 | -- | -- | -- | -- | -- | -- |
