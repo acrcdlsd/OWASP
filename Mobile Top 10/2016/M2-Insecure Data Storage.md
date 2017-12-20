@@ -43,7 +43,9 @@
 ### 視覚的な例
 iGoatは、セキュリティコミュニティが直接このような種類の脆弱性を調査できるように意図的に脆弱にしたモバイルアプリです。以下のエクササイズでは、偽の銀行アプリに認証情報を入力しログインします。その次に、ファイルシステムに進みます。アプリケーションディレクトリ内に、「credentials.sqlite」というデータベースを見つけることができます。このデータベースを調査することによって、アプリケーションがユーザ名と認証情報(Jason:pleasedontstoremebro!)を平文で保存していることが分かります。
 
-
+![M2-AttackScenarios_1.png](img/M2-AttackScenarios_1.png)<br>
+![M2-AttackScenarios_2.png](img/M2-AttackScenarios_2.png)<br>
+![M2-AttackScenarios_3.png](img/M2-AttackScenarios_3.png)<br>
 
 
 ## 参考資料
