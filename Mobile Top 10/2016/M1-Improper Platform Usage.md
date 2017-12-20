@@ -1,9 +1,30 @@
 # M1：不適切なプラットフォームの利用
 
-| <center>脅威エージェント</center> | <center>攻撃経路</center> | <center>セキュリティ上の弱点</center> || <center>技術的な影響</center> | <center>ビジネスへの影響</center> |
-| -- | -- | -- | -- | -- | -- |
-| <center>アプリケーション依存</center> | <center>攻撃難易度：容易</center> | <center>普及度：中</center> | <center>検出難易度：普通</center> | <center>深刻な影響</center> | <center>アプリケーション/ビジネス依存</center> |
-| 本カテゴリは、プラットフォーム機能の誤用や、プラットフォームセキュリティコントロールの不使用が対象です。Androidインテント、プラットフォームのアクセス許可、TouchIDの誤用、キーチェーン、モバイルOSの一部である他のセキュリティコントロールが含まれます。 | 攻撃経路は、これまでのOWASP Top Tenの攻撃経路と同じです。公開しているあらゆるAPIコールが攻撃経路となります。 | 本脆弱性が攻撃されるには、組織はモバイルアプリで使用するWebサービスやAPIコールを公開しなければいけません。その公開されたサービスやAPIコールは、サーバ内でOWASP Top Tenの脆弱性を生み出す危険なコーディング技術で実装されており、攻撃者はモバイルのインターフェースから脆弱なエンドポイントに、悪意のある入力値もしくはイベントを想定外の順序で送信することができます。それゆえ、攻撃者はサーバ上に存在するOWASP Top Tenの脆弱性に気付くことができます。 || 本脆弱性の技術的な影響は、攻撃者がモバイルデバイスを通して悪用する脆弱性(OWASP Top Tenで定義されている)の技術的な影響と一致します。<br>例えば、攻撃者はモバイルデバイスを通してクロスサイトスクリプティング(XSS)脆弱性を悪用するかもしれません。<br>これは中程度の技術的な影響であるOWASP Top Ten A3 - XSSカテゴリと一致します。 | 本脆弱性のビジネスへの影響は、攻撃者がモバイルデバイスを通して悪用する脆弱性(OWASP Top Tenで定義されている)のビジネスへの影響と一致します。<br>例えば、攻撃者はモバイルデバイスを通してクロスサイトスクリプティング(XSS)脆弱性を悪用するかもしれません。これはOWASP Top Ten A3 - XSSカテゴリのビジネスへの影響と一致します。|
+<table style="align:center; border-collapse: collapse; text-align:center; margin: 0px 5px 0px 5px; border: 3px solid #444444; background-color: #F8FFF8; padding=2;">
+<tbody>
+ <tr style="background-color: #4F81BD; border: 3px solid #444444; height: 2em; font-size: 130%; color: #FFFFFF; text-shadow: 2px 2px 8px #000000;">
+  <th width="16.5%" style="border: 3px solid #444444;"> 脅威エージェント</th>
+  <th width="16.5%" style="border: 3px solid #444444;"> 攻撃経路</th>
+  <th width="33%" style="border: 3px solid #444444;" colspan="2"> セキュリティ上の弱点</th>
+  <th width="16.5%" style="border: 3px solid #444444;"> 技術的な影響</th>
+  <th width="16.5%" style="border: 3px solid #444444;"> ビジネスへの影響</th>
+ </tr>
+ <tr>
+  <td style="font-size: 100%; font-weight: bold; background-color: #D9D9D9; color: #000000; border: 3px solid #444444"> アプリケーション依存 </td>
+  <td width="16.5%" style="{{{style}}}; background-color: #FF0000; color: #000000; border: 3px solid #444444">攻撃難易度：容易</td>
+  <td width="16.5%" style="{{{style}}}; background-color: #FFB200; color: #000000; border: 3px solid #444444">普及度：中</td>
+  <td width="16.5%" style="{{{style}}}; background-color: #FFB200; color: #000000; border: 3px solid #444444">検出難易度：普通</td>
+  <td width="16.5%" style="{{{style}}}; background-color: #FF0000; color: #000000; border: 3px solid #444444">深刻な影響</td>
+  <td style="font-size: 100%; font-weight: bold; background-color: #D9D9D9; color: #000000; border: 3px solid #444444"> アプリケーション / ビジネス依存</td>
+ </tr>
+ <tr valign="top"><td style="text-align: left; border: 3px solid #444444;">本カテゴリは、プラットフォーム機能の誤用や、プラットフォームセキュリティコントロールの不使用が対象です。Androidインテント、プラットフォームのアクセス許可、TouchIDの誤用、キーチェーン、モバイルOSの一部である他のセキュリティコントロールが含まれます。</td>
+  <td style="text-align: left; border: 3px solid #444444;">攻撃経路は、これまでのOWASP Top Tenの攻撃経路と同じです。公開しているあらゆるAPIコールが攻撃経路となります。</td>
+  <td style="text-align: left; border: 3px solid #444444;" colspan="2">本脆弱性が攻撃されるには、組織はモバイルアプリで使用するWebサービスやAPIコールを公開しなければいけません。その公開されたサービスやAPIコールは、サーバ内でOWASP Top Tenの脆弱性を生み出す危険なコーディング技術で実装されており、攻撃者はモバイルのインターフェースから脆弱なエンドポイントに、悪意のある入力値もしくはイベントを想定外の順序で送信することができます。それゆえ、攻撃者はサーバ上に存在するOWASP Top Tenの脆弱性に気付くことができます。</td>
+  <td style="text-align: left; border: 3px solid #444444;">本脆弱性の技術的な影響は、攻撃者がモバイルデバイスを通して悪用する脆弱性(OWASP Top Tenで定義されている)の技術的な影響と一致します。<br>例えば、攻撃者はモバイルデバイスを通してクロスサイトスクリプティング(XSS)脆弱性を悪用するかもしれません。<br>これは中程度の技術的な影響であるOWASP Top Ten A3 - XSSカテゴリと一致します。 </td>
+  <td style="text-align: left; border: 3px solid #444444;">本脆弱性のビジネスへの影響は、攻撃者がモバイルデバイスを通して悪用する脆弱性(OWASP Top Tenで定義されている)のビジネスへの影響と一致します。<br>例えば、攻撃者はモバイルデバイスを通してクロスサイトスクリプティング(XSS)脆弱性を悪用するかもしれません。これはOWASP Top Ten A3 - XSSカテゴリのビジネスへの影響と一致します。</td>
+ </tr>
+</tbody>
+</table>
 
 ## 脆弱性有無の確認
 本カテゴリでのリスクの重要な特徴は、プラットフォーム(iOS、Android、Windows Phoneなど)はドキュメント化されていてよく理解がされている機能を提供していますが、アプリがその機能を利用しない、もしくは間違って利用してしまうことです。本カテゴリは、この設計と実装は厳密にはアプリケーション開発者の問題ではないため、他のMobile Top Tenのカテゴリとは異なります。
