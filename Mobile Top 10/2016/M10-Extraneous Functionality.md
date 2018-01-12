@@ -9,12 +9,12 @@
   <th>ビジネスへの影響</th>
  </tr>
  <tr>
-  <td>アプリケーション依存 </td>
-  <td>攻撃難易度：容易</td>
-  <td>普及度：中</td>
-  <td>検出難易度：中</td>
-  <td>中程度の影響</td>
-  <td>アプリケーション / ビジネス依存</td>
+  <td align="center" width="20%">アプリケーション依存 </td>
+  <td align="center" width="15%">攻撃難易度<br>容易</td>
+  <td align="center" width="15%">普及度<br>中</td>
+  <td align="center" width="15%">検出難易度<br>中</td>
+  <td align="center" width="17.5%">影響度<br>中</td>
+  <td align="center" width="17.5%">アプリケーション / ビジネス依存</td>
  </tr>
  <tr>
   <td>バックエンドシステムの隠し機能を見つけるために、通常、攻撃者はモバイルアプリ内の関係のない機能を理解しようとします。攻撃者は通常、エンドユーザの関与無しに攻撃者自身のシステムから直接関係のない機能を悪用するでしょう。</td>
