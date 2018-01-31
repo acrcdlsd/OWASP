@@ -9,12 +9,12 @@
   <th>ビジネスへの影響</th>
  </tr>
  <tr>
-  <td align="center" width="20%">アプリケーション依存</td>
+  <td align="center" width="20%">アプリ依存</td>
   <td align="center" width="15%">攻撃難易度<br>容易</td>
   <td align="center" width="15%">普及度<br>中</td>
   <td align="center" width="15%">検出難易度<br>普通</td>
   <td align="center" width="17.5%">影響度<br>重大</td>
-  <td align="center" width="17.5%">アプリケーション / ビジネス依存</td>
+  <td align="center" width="17.5%">アプリ / ビジネス依存</td>
  </tr>
  <tr>
   <td>本カテゴリは、プラットフォーム機能の誤用や、プラットフォームセキュリティコントロールの不具合が対象です。例えば、Androidインテント、プラットフォームのアクセス許可、TouchID、キーチェーン、その他モバイルOSに含まれるセキュリティコントロール等の誤用があげられます。</td>
