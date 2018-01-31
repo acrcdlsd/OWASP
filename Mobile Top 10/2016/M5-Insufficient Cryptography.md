@@ -9,12 +9,12 @@
   <th>ビジネスへの影響</th>
  </tr>
  <tr>
-  <td align="center" width="20%">アプリケーション依存 </td>
+  <td align="center" width="20%">アプリ依存 </td>
   <td align="center" width="15%">攻撃難易度<br>容易</td>
   <td align="center" width="15%">普及度<br>中</td>
   <td align="center" width="15%">検出難易度<br>普通</td>
   <td align="center" width="17.5%">影響度<br>重大</td>
-  <td align="center" width="17.5%">アプリケーション / ビジネス依存</td>
+  <td align="center" width="17.5%">アプリ / ビジネス依存</td>
  </tr>
  <tr>
   <td>以下のような脅威エージェントが存在します。 <br> 不適切に暗号化されたデータに物理的にアクセスできる攻撃者、もしくは、攻撃者のために動作するモバイルマルウェア</td>
