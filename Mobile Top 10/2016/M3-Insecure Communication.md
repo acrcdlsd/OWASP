@@ -9,12 +9,12 @@
   <th>ビジネスへの影響</th>
  </tr>
  <tr>
-  <td align="center" width="20%">アプリケーション依存</td>
+  <td align="center" width="20%">アプリ依存</td>
   <td align="center" width="15%">攻撃難易度<br>容易</td>
   <td align="center" width="15%">普及度<br>中</td>
   <td align="center" width="15%">検出難易度<br>普通</td>
   <td align="center" width="17.5%">影響度<br>重大</td>
-  <td align="center" width="17.5%">アプリケーション / ビジネス依存</td>
+  <td align="center" width="17.5%">アプリ / ビジネス依存</td>
  </tr>
  <tr>
   <td>モバイルアプリケーションを設計する場合、データは一般的にクライアント-サーバ形式で交換されます。この形式でデータを送信するとき、モバイルデバイスのキャリアネットワークとインターネットを必ず通過します。通信回線を通過する間、脅威エージェントは機密データを傍受するために脆弱性を悪用するかもしれません。例えば以下の脅威エージェントが存在します。
@@ -71,7 +71,7 @@
  - 証明書ピニングの利用を検討すること。実施手順としては、まず証明書をエクスポートし、アプリバンドルに含め、信頼オブジェクトにアンカーする。そして、NSURLメソッドのconnection:willSendRequestForAuthenticationChallengeを使用してあなたの証明書を許可することである。
  
 ### Android固有のベストプラクティス
- - 開発サイクルの後に、org.apache.http.conn.ssl.AllowAllHostnameVerifierやSSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIERといったあらゆる証明書を許可するコードは全て削除すること。なぜなら、これはあらゆる証明書を信頼することと同じだからある。
+ - 開発サイクルの後に、org.apache.http.conn.ssl.AllowAllHostnameVerifierやSSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIERといったあらゆる証明書を許可するコードは全て削除すること。なぜなら、これはあらゆる証明書を信頼することと同義だからある。
  - SSLSocketFactoryクラスを拡張する場合は、サーバ証明書が正しくチェックされるようにcheckServerTrustedが適切に実装されているかを確認すること。
 
 
