@@ -60,7 +60,7 @@ int main(int argc, char **argv){
     return 0;    // 0 as return value
 }
 ```
-[このページ](https://www.owasp.org/index.php/Buffer_overflow_attack)から取得した本例は、私達はバッファオーバーフローを防ぐためにgets関数の使用を避けるべきです。これはほとんどの静的解析ツールがコード品質問題として報告する例です。
+[このページ](https://www.owasp.org/index.php/Buffer_overflow_attack)から取得したこの例では、バッファオーバーフローを防ぐためにgets関数の使用を避けるべきです。これはほとんどの静的解析ツールがコード品質の問題として報告する例です。
 
 
 ## 参考資料
