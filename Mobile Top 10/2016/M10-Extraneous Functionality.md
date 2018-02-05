@@ -63,5 +63,5 @@
 ### OWASP
  - [OWASP](https://www.owasp.org/)
  
-### その他
- - [外部参照](http://cwe.mitre.org/)
+### 外部リンク
+ - [CWE-Common Weakness Enumeration](http://cwe.mitre.org/)

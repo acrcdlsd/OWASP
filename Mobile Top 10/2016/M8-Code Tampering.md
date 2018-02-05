@@ -93,7 +93,7 @@ SUコマンドを直接実行してみる
 ### OWASP
  - [OWASP Reverse Engineering and Code Modification Prevention Project](https://www.owasp.org/index.php/OWASP_Reverse_Engineering_and_Code_Modification_Prevention_Project)
 
-### その他
+### 外部リンク
  1. [Arxan Research: State of Security in the App Economy, Volume 2](https://www.arxan.com/assets/1/7/State_of_Security_in_the_App_Economy_Report_Vol._2.pdf), November 2013:
   "Adversaries have hacked 78 percent of the top 100 paid Android and iOS apps in 2013."
 
