@@ -110,5 +110,5 @@ iOSキーチェーンは、アプリとシステムデータ双方にとって�
 ### OWASP
  - [OWASP Top 10](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project)
 
-### その他
- - [外部参照](http://cwe.mitre.org/)
+### 外部リンク
+ - [CWE-Common Weakness Enumeration](http://cwe.mitre.org/)

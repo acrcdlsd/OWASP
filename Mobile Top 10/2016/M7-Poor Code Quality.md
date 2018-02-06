@@ -67,5 +67,5 @@ int main(int argc, char **argv){
 ### OWASP
  - [Buffer Overflow Examples](https://www.owasp.org/index.php/Buffer_overflow_attack)
 
-### その他 
- - [外部参照](http://cwe.mitre.org/)
+### 外部リンク 
+ - [CWE-Common Weakness Enumeration](http://cwe.mitre.org/)
