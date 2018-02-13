@@ -11,7 +11,7 @@
  <tr>
   <td align="center" width="20%">アプリ依存 </td>
   <td align="center" width="15%">攻撃難易度<br>容易</td>
-  <td align="center" width="15%">普及度<br>中</td>
+  <td align="center" width="15%">蔓延度<br>中</td>
   <td align="center" width="15%">検出難易度<br>普通</td>
   <td align="center" width="17.5%">影響度<br>重大</td>
   <td align="center" width="17.5%">アプリ / ビジネス依存</td>
@@ -26,7 +26,7 @@
    <li> プライバシーの侵害</li>
    <li> 情報の窃取</li>
    <li> コードの盗用</li>
-   <li> 知的財産の窃取</li>
+   <li> 知的財産の窃取</li>
    <li> 風評被害</li>
   </ul>
   </td>
