@@ -1,5 +1,5 @@
 # OWASP Mobile Top 10 - 2016  日本語訳
-本ドキュメントは、OWASP Mobile Top 10の有志による日本語訳です。
+本ドキュメントは、OWASP Mobile Top 10の有志による日本語訳です。<br>
 オリジナルは[Mobile Top 10 2016-Top 10](https://www.owasp.org/index.php/Mobile_Top_10_2016-Top_10)にあります。
 
 ## Description
