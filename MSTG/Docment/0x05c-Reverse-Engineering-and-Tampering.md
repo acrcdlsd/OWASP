@@ -195,14 +195,36 @@ Congratulations! たった今, 静的解析の基本を学習した. 解析さ�
 
 次に, `check_input`メソッドでCtrl+(Macの場合はCommand+)をクリックする. これはメソッド定義に連れていく. デコンパイルされたメソッドは以下のように見える.
 
-```
-hogehoge
+```java
+    public static boolean check_input(String string) {
+        byte[] arrby = Base64.decode((String)"5UJiFctbmgbDoLXmpL12mkno8HT4Lv8dlat8FxR2GOc=", (int)0);
+        byte[] arrby2 = new byte[]{};
+        try {
+            arrby = sg.vantagepoint.a.a.a(Validator.b("8d127684cbc37c17616d806cf50473cc"), arrby);
+            arrby2 = arrby;
+        }sa
+        catch (Exception exception) {
+            Log.d((String)"CodeCheck", (String)("AES error:" + exception.getMessage()));
+        }
+        if (string.equals(new String(arrby2))) {
+            return true;
+        }
+        return false;
+    }
 ```
 
 従って, 16進エンコードされた暗号鍵(16 HEXバイト = 126bitで一般的な鍵長)のように見えるなにかと一緒に`sg.vantagepoint.a.a`(再び, すべて`a`と名付けられている)パッケージの`a`関数に引き渡されるBase64でエンコードされた文字列がある. 厳密に何がこの特定のすべきことをするのだろうか？調査するためにCtrlをクリックする.
 
-```
-hogehoge
+
+```java
+public class a {
+    public static byte[] a(byte[] object, byte[] arrby) {
+        object = new SecretKeySpec((byte[])object, "AES/ECB/PKCS7Padding");
+        Cipher cipher = Cipher.getInstance("AES");
+        cipher.init(2, (Key)object);
+        return cipher.doFinal(arrby);
+    }
+}
 ```
 
 今, 良い線を行っている. 単に標準のAES-ECBである. `check_input`の`arrby1`に格納されているBase64の文字列は暗号文であるように見える. それは128bitのAESで復号され, ユーザインプットと比較される. おまけのタスクとして, 抽出された暗号文を解読し, 秘密の値を見つけてみよう.
@@ -227,24 +249,56 @@ $ adb install HelloWorld-JNI.apk
 
 `apkx`でAPKをデコンパイルする. これは, `HelloWorld/src`ディレクトリの中にソースコードを抽出する.
 
-```
-hogehoge
+```bash
+$ wget https://github.com/OWASP/owasp-mstg/blob/master/OMTG-Files/03_Examples/01_Android/01_HelloWorld-JNI/HelloWord-JNI.apk
+$ apkx HelloWord-JNI.apk
+Extracting HelloWord-JNI.apk to HelloWord-JNI
+Converting: classes.dex -> classes.jar (dex2jar)
+dex2jar HelloWord-JNI/classes.dex -> HelloWord-JNI/classes.jar
 ```
 
 MainActivityは, `MainActivity.java`ファイルに含まれている. "Hello World"テキストビューは`onCreate()`メソッドに存在している.
 
-```
-hogehoge
+
+```java
+public class MainActivity
+extends AppCompatActivity {
+    static {
+        System.loadLibrary("native-lib");
+    }
+
+    @Override
+    protected void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
+        this.setContentView(2130968603);
+        ((TextView)this.findViewById(2131427422)).setText((CharSequence)this.stringFromJNI());
+    }
+
+    public native String stringFromJNI();
+}
+
+}
 ```
 
 上記例の一番下にある`public native String stringFromJNI`の宣言に注意すること. "native"というキーワードは, メソッドがネイティブ言語で実装されていることをJavaデコンパイラに示している. 対応する関数は実行中に解決されるが, 期待されているシグネチャでグローバルシンボルをエクスポートするネイティブライブラリがロードされた場合に限る(シグネチャは, パッケージ名, クラス名, メソッド名を含む). この例では, この要件は以下に示すC/C++の関数で満たされる.
 
-```
-hogehoge
+```c
+JNIEXPORT jstring JNICALL Java_sg_vantagepoint_helloworld_MainActivity_stringFromJNI(JNIEnv *env, jobject)
 ```
 
 ところで, この関数のネイティブ実装はどこにあるのだろうか？APKアーカイブの`lib`ディレクトリの中を確認すると, 異なるプロセッサアーキテクチャにちなんで名付けられた8つのサブディレクトリが目に入るだろう. これらのディレクトリのそれぞれは, 問題となっているプロセッサアーキテクチャのためにコンパイルされた`libnative-lib.so`と呼ばれるネイティブライブラリのバージョンを含んでいる. `System.loadLibrary`が呼び出されたとき, ローダーはアプリが実行しているデバイスに基づいて正確なバージョンを選択する.
 
 <img src="Images/Chapters/0x05c/archs.jpg" width="300px" />
 
-上記の命名規則に従い,
+上記の命名規則に従い, ライブラリに`Java_sg_vantagepoint_helloworld_MainActivity_stringFromJNI`と呼ばれるシンボルをエクスポートすることを期待することができる. Linuxシステムでは, `readelf`(GNU binutilsに含まれている)や`nm`を用いてシンボルのリストを取得することができる. Mac OS上では, MacportsやHomebrewを通してインストールすることができる`gradelf`ツールを用いてこれを行う. 以下の例では, `gradelf`を使用している.
+
+```
+$ greadelf -W -s libnative-lib.so | grep Java
+     3: 00004e49   112 FUNC    GLOBAL DEFAULT   11 Java_sg_vantagepoint_helloworld_MainActivity_stringFromJNI
+```
+
+これは, `stringFromJNI`ネイティブメソッドが呼び出されたときに最終的に実行されるネイティブ関数である.
+
+コードを逆アセンブルするために, ELFバイナリ(つまり, 任意の逆アセンブラ)を理解する任意の逆アセンブラに`libnative-lib.so`をロードすることができる. 
+
+
