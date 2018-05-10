@@ -2,6 +2,6 @@
 
 https://github.com/OWASP/owasp-masvs
 
-https://www.owasp.org/images/6/61/MASVS_v0.9.4.pdf
+https://github.com/OWASP/owasp-masvs/releases/download/1.0/OWASP_Mobile_AppSec_Verification_Standard_v1.0.pdf
 
 GitHubとPDFで差がある場合はPDFを正としています。
