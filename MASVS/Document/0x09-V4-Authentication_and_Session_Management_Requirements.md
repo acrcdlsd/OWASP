@@ -29,5 +29,5 @@ OWASP Mobile Security Testing Guideには、このセクションに記載され
 
 ## 参考文献
 
-- OWASP Mobile Top 10: [M4 - Insecure Authentication(安全でない認証)](https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication), [M6 - Insecure Authorization(安全でない認可制御)](https://www.owasp.org/index.php/Mobile_Top_10_2016-M6-Insecure_Authorization)
+- OWASP Mobile Top 10: [M4 - Insecure Authentication(安全でない認証)](https://www.owasp.org/index.php/Mobile_Top_10_2016-M4-Insecure_Authentication)、[M6 - Insecure Authorization(安全でない認可制御)](https://www.owasp.org/index.php/Mobile_Top_10_2016-M6-Insecure_Authorization)
 - CWE:  https://cwe.mitre.org/data/definitions/287.html
