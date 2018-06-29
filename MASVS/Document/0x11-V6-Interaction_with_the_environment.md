@@ -30,3 +30,4 @@ OWASP モバイルセキュリティテストガイドでは、本セクショ�
 - OWASP Mobile Top 10: M1 - Improper Platform Usage(不適切なプラットフォームの使用)
 - CWE: https://cwe.mitre.org/data/definitions/20.html
 - CWE: https://cwe.mitre.org/data/definitions/749.html
+
