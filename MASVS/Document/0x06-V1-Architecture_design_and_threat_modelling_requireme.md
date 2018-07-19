@@ -27,7 +27,7 @@ MASVS-L1とMASVS-L2の要件を以下に示します。
 
 詳細は以下を参照してください。
 
-- OWASP Mobile Top 10: M10 - Extraneous Functionality(関係のない機能): https://www.owasp.org/index.php/Mobile_Top_10_2016-M10-Extraneous_Functionality
+- OWASP Mobile Top 10: M10 - Extraneous Functionality(余計な機能): https://www.owasp.org/index.php/Mobile_Top_10_2016-M10-Extraneous_Functionality
 - OWASP Security Architecture cheat sheet: https://www.owasp.org/index.php/Application_Security_Architecture_Cheat_Sheet
 - OWASP Thread modelling: https://www.owasp.org/index.php/Application_Threat_Modeling
 - OWASP Secure SDLC Cheat Sheet: https://www.owasp.org/index.php/Secure_SDLC_Cheat_Sheet
