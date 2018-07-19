@@ -26,7 +26,7 @@ OWASP Mobile Security Testing Guide には、本セクションに記載され�
 - Android - https://github.com/OWASP/owasp-mstg/blob/master/Document/0x05e-Testing-Cryptography.md
 - iOS - https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06e-Testing-Cryptography.md
 
-　詳細は以下を参照してください。
+詳細は以下を参照してください。
 
 - OWASP Mobile Top 10: [M5 - Insufficient Cryptography(不十分な暗号化)](https://www.owasp.org/index.php/Mobile_Top_10_2016-M5-Insufficient_Cryptography)
 - CWE: https://cwe.mitre.org/data/definitions/310.html
