@@ -1,4 +1,4 @@
-﻿# V3: 暗号要件
+# V3: 暗号要件
 
 ## 本章の目的　
 
@@ -16,7 +16,7 @@
 | **3.2** | アプリケーションが実績のある暗号プリミティブの実装を使用している | ✓ | ✓ |
 | **3.3** | アプリケーションが業界の最良の実行方法に準拠したパラメータで構成された特定のユースケースに適切な暗号プリミティブを使用している | ✓ | ✓ |
 | **3.4** | セキュリティの目的で脆弱であると広く考えられている暗号プロトコルやアルゴリズムをアプリケーションが使用していない | ✓ | ✓ |
-| **3.5** | アプリケーションが複数の目的で同じ暗号鍵を再利用しない | ✓ | ✓ |
+| **3.5** | アプリケーションが複数の目的で同じ暗号鍵を再利用していない | ✓ | ✓ |
 | **3.6** | すべての乱数が十分にセキュアな乱数生成機を用いて生成されている | ✓ | ✓ |
 
 ## 参考文献　
@@ -26,7 +26,7 @@ OWASPモバイルセキュリティテストガイドは、本章に記載され
 - Android - https://github.com/OWASP/owasp-mstg/blob/master/Document/0x05e-Testing-Cryptography.md
 - iOS - https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06e-Testing-Cryptography.md
 
-　詳細は以下参照：
+　詳細は以下を参照してください。
 
 - OWASP Mobile Top 10: [M5 - Insufficient Cryptography(不十分な暗号化)](https://www.owasp.org/index.php/Mobile_Top_10_2016-M5-Insufficient_Cryptography)
 - CWE: https://cwe.mitre.org/data/definitions/310.html
