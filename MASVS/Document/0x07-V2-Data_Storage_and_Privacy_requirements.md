@@ -1,4 +1,4 @@
-# V2: データ保存とプライバシーに関する要件
+# V2: データストレージとプライバシーに関する要件
 
 ## 本章の目的
 
@@ -42,5 +42,5 @@ OWASPモバイルセキュリティテストガイドには、本セクション
 
 詳細は以下を参照してください。
 
-- OWASP Mobile Top 10: M2  - Insecure Data Storage(安全でないデータ保存): https://www.owasp.org/index.php/Mobile_Top_10_2016-M2-Insecure_Data_Storage
+- OWASP Mobile Top 10: M2  - Insecure Data Storage(安全でないデータストレージ): https://www.owasp.org/index.php/Mobile_Top_10_2016-M2-Insecure_Data_Storage
 - CWE: https://cwe.mitre.org/data/definitions/922.html
