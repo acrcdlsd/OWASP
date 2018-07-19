@@ -35,7 +35,7 @@ MASVSにおける機密データとは、ユーザ認証情報およびそれ以
 
 ## 参考文献
 
-OWASP モバイルセキュリティテストガイドでは、本セクションに記載されている要件を検証するための詳細な方法を提供しています。
+OWASP Mobile Security Testing Guide には、このセクションに記載されている要件を検証するための詳細な手順が記載されています。
 
 - For Android - https://github.com/OWASP/owasp-mstg/blob/master/Document/0x05d-Testing-Data-Storage.md
 - For iOS - https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06d-Testing-Data-Storage.md
