@@ -1,8 +1,8 @@
-# V6: プラットフォーム相互作用要件
+# V6: プラットフォーム相互作用に関する要件
 
 ## 本章の目的
 
-本章の目的は、アプリケーションが安全にプラットフォーム(APIや標準コンポーネント)を使用することを保証することです。それに加えて、本制御はアプリケーション間の通信(IPC)も含んでいます。
+本章の目的は、アプリケーションが安全にプラットフォーム(APIや標準コンポーネント)を使用することを保証することです。それに加えて、アプリケーション間の通信(IPC)も含んでいます。
 
 ## セキュリティ検証要件
 
@@ -19,7 +19,7 @@
 
 ## 参考文献
 
-OWASP Mobile Security Testing Guide には、本セクションに記載されている要件を検証するための詳細な手順が記載されています。
+OWASPモバイルセキュリティテストガイドには、本セクションに記載されている要件を検証するための詳細な手順が記載されています。
 
 - Android - https://github.com/OWASP/owasp-mstg/blob/master/Document/0x05h-Testing-Platform-Interaction.md
 - iOS - https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06h-Testing-Platform-Interaction.md
