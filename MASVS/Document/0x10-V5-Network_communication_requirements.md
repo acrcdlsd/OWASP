@@ -1,4 +1,4 @@
-# V5: ネットワーク通信要件
+# V5: ネットワーク通信に関する要件
 
 ## 本章の目的
 
@@ -17,7 +17,7 @@
 
 ## 参考文献
 
-OWASP Mobile Security Testing Guide には、本セクションに記載されている要件を検証するための詳細な手順が記載されています。
+OWASPモバイルセキュリティテストガイドには、本セクションに記載されている要件を検証するための詳細な手順が記載されています。
 
 - Android - https://github.com/OWASP/owasp-mstg/blob/master/Document/0x05g-Testing-Network-Communication.md
 - iOS - https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06g-Testing-Network-Communication.md
