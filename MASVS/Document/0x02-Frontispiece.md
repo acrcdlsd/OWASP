@@ -4,7 +4,7 @@
 
 Mobile Application Security Verification Standard(モバイルアプリケーションセキュリティ検証標準：MASVS)バージョン1.0へようこそ。MASVSは、iOSとAndroidのモバイルアプリケーションを設計、開発、テストするときに必要とされるセキュリティ要件のフレームワークを定めるためのコミュニティの成果です。
 
-MASVS は、コミュニティの努力と業界のフィードバックの集大成です。我々は、この標準が年々進化することを期待しており、コミュニティから受けるフィードバックは歓迎します。我々と連絡を取るための最善の方法は、下記のOWASP Mobile Project Slackチャンネルに参加することです。
+MASVS は、コミュニティの努力と業界のフィードバックの集大成です。我々は、この標準が年々進化することを期待しており、コミュニティから受けるフィードバックを歓迎します。我々と連絡を取るための最も良い方法は、下記のOWASP Mobile Project Slackチャンネルに参加することです。
 
 https://owasp.slack.com/messages/project-mobile_omtg/details/
 
