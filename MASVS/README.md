@@ -1,11 +1,24 @@
-# OWASP Mobile Application Security Verification Standard (MASVS)の日本語訳
+# OWASP Mobile Application Security Verification Standard (MASVS) 日本語訳
+本ドキュメントは、OWASP MASVS 1.0 の有志による日本語訳です。
+オリジナルは[OWASP Mobile Application Security Verification Standard](https://github.com/OWASP/owasp-masvs/)にあります。
 
-https://github.com/OWASP/owasp-masvs
+## Description
+OWASP MASVS は、次のような多くのシナリオで役立つモバイルアプリのベースラインセキュリティ要件を定めています。
+- SDLC: ソリューションアーキテクトと開発者が従うべきセキュリティ要件の確立
+- モバイルアプリのペネトレーションテスト: モバイルアプリのペネトレーションテストの完全性と一貫性の保証
+- 調達: モバイルアプリのセキュリティのためのものさし(ベンダーへのアンケートの形で)
+- など
+MASVS は [OWASP Mobile Security Testing Guide](https://github.com/OWASP/owasp-mstg) の姉妹プロジェクトです。
 
-https://github.com/OWASP/owasp-masvs/releases/download/1.0/OWASP_Mobile_AppSec_Verification_Standard_v1.0.pdf
+本ドキュメントは、株式会社ラック セキュリティ診断部 ペンテスト技術グループのメンバーが中心となって日本語訳を作成しました。
+日本語訳にあたっては正確性と理解のしやすさに考慮して作業しましたが、翻訳の間違いや改良についてお気づきの点があればご指摘いただければ幸いです。
 
-GitHubのドキュメントとPDFで差がある場合はPDFを正としています。
+Open Web Application Security Project（OWASP）は、安全なソフトウェアの設計・開発・習得・運用と維持に関する活動を支援する、非営利の団体です。
+OWASPのツールやドキュメントなど、すべての成果物は無料で利用できます。
+OWASPのホームページは http://www.owasp.org/ にあります。
 
+## Licence
+[Creative Commons Attribution-ShareAlike ](https://creativecommons.org/licenses/by-sa/4.0/)
 
 ## Author（日本語訳）
  - 三井  宏弥（株式会社ラック）
