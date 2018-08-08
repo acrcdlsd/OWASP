@@ -1,6 +1,6 @@
 # OWASP Mobile Application Security Verification Standard (MASVS) 日本語訳
 本ドキュメントは、OWASP MASVS 1.0 の有志による日本語訳です。
-オリジナルは[OWASP Mobile Application Security Verification Standard](https://github.com/OWASP/owasp-masvs/)にあります。
+オリジナルは [OWASP Mobile Application Security Verification Standard](https://github.com/OWASP/owasp-masvs/) にあります。
 
 ## Description
 OWASP MASVS は、次のような多くのシナリオで役立つモバイルアプリのベースラインセキュリティ要件を定めています。
