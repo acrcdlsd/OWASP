@@ -1,6 +1,6 @@
 # はじめに
 
-## 標準について
+## 本標準について
 
 Mobile Application Security Verification Standard(モバイルアプリケーションセキュリティ検証標準：MASVS)バージョン1.0へようこそ。MASVSは、iOSとAndroidのモバイルアプリケーションを設計、開発、テストするときに必要とされるセキュリティ要件のフレームワークを定めるためのコミュニティの成果です。
 
@@ -15,7 +15,7 @@ http://owasp.herokuapp.com/
 ## 著作権とライセンス
 
 ![license](images/license.png)
-Copyright © 2017 The OWASP Foundation. このドキュメントはCreative Commons Attribution ShareAlike 3.0 ライセンスのもとでリリースされます. いかなる再利用または再配布に関して、本プロジェクトのライセンス項目を第三者に明らかにする必要があります。
+Copyright © 2017 The OWASP Foundation. このドキュメントはCreative Commons Attribution ShareAlike 3.0 ライセンスのもとでリリースされます。いかなる再利用または再配布に関して、本プロジェクトのライセンス項目を第三者に明らかにする必要があります。
 
 | プロジェクト代表者 | 筆頭著者 | 寄稿者およびレビュアー |
 | --- | --- | --- |
