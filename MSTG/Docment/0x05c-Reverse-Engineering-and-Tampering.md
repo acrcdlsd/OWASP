@@ -429,7 +429,18 @@ $ zipalign -v 4 dist/UnCrackable-Level1.apk ../UnCrackable-Repackaged.apk
 $ adb install UnCrackable-Repackaged.apk
 ```
 
-##### "Wait For Debugger(デバッガを待つ)"機能
+##### "Wait For Debugger" 機能
 
-UnCrackableアプリは, 愚かではない. デバッグモードで実行され, シャットダウンによって反応することに気付く. モーダルダイアログが即座に表示され, "OK"をタップするとすぐにcrackmeは終了する. 
+UnCrackable アプリは間抜けではない: デバッグモードで実行していることに気付き, シャットダウンによって反応を示す. モーダル・ダイアログがすぐに表示され, "OK" をタップすると crackme はすぐに終了する. 
+
+幸いにも, Android の "Developer options" には, 便利な "Wait for Debugger" 機能が含まれている. これは, JDWP デバッガが接続されるまで起動するアプリを自動的にサスペンドできるようになるものである. この機能を使用することで, 検出メカニズムが実行される前にデバッガを接続することができ, メカニズムをトレース, デバッグ, 解除することができる. これは本当に不公平なアドバンテージだが, その一方で, リバースエンジニアは決して公平にプレイすることはない. 
+
+
+![Debugger Detection](Images/Chapters/0x05c/debugger_detection.jpg)
+
+開発者オプションで, デバッグするアプリケーションとして `Uncrackable1` を選択し, "Wait for Debugger" スイッチを有効にする. 
+
+![Developer Options](Images/Chapters/0x05c/developer-options.jpg)
+
+注意: `default.prop` に `ro.debuggable` が 1 にセットされていても, マニフェストで  `android:debuggable` フラグが `true` にセットされていない限り, アプリは "debug app" リストに現れない. 
 
