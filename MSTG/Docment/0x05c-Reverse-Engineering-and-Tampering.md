@@ -299,6 +299,147 @@ $ greadelf -W -s libnative-lib.so | grep Java
 
 これは, `stringFromJNI`ネイティブメソッドが呼び出されたときに最終的に実行されるネイティブ関数である.
 
-コードを逆アセンブルするために, ELFバイナリ(つまり, 任意の逆アセンブラ)を理解する任意の逆アセンブラに`libnative-lib.so`をロードすることができる. 
+コードを逆アセンブルするために, ELF バイナリ(つまり, 任意の逆アセンブラ)を理解する任意の逆アセンブラに `libnative-lib.so` をロードすることができる. アプリが異なるアーキテクチャのバイナリを同梱しているのなら, その逆アセンブラと互換性さえあれば, 理論的には, 最も慣れ親しんでいるアーキテクチャを選定することができる. それぞれのバージョンは, 同じソースからコンパイルされ, 同じ機能を実装する. しかしながら, 後ほど実デバイス上でライブラリをデバッグする予定であるならば, 通常は ARM ビルドを選択するのが賢明である. 
+
+新旧両方の ARM プロセッサをサポートするために, Android アプリは, 異なるアプリケーションバイナリインタフェイス(ABI)でコンパイルされた複数の ARM ビルドを同梱している. ABI は, アプリケーションのマシンコードが実行時にシステムとどのようにやり取りしなければならないかを定義している. 以下の ABI がサポートされている：
+
+- armeabi: ABI は, 少なくとも ARMv5TE 命令セットをサポートする ARM ベースの CPU 用である. 
+- armeabi-v7a: この ABI は, いくつかの CPU 命令セット拡張機能を含めるために armeabi を拡張する. 
+- arm64-v8a: ABI は, 新たな 64bit ARM アーキテクチャである AArch64 をサポートする ARMv8 ベースの CPU 用である. 
+
+ほとんどの逆アセンブラは, これらのアーキテクチャのすべてを処理することができる. 以下では, IDA Pro で `armeabi-v7a` のバージョンを見ていく. それは, `lib/armeabi-v7a/libnative-lib.so` にある. IDA Pro のライセンスを持っていない場合は, Hex-Rays のWebサイトで利用可能なデモや評価版で同様のことを行うことができる. IDA Pro でファイルを開き, "Load new file" ダイアログで, ファイルタイプとして "ELF for ARM (Shared Object)" を(IDA は, 自動的に検出するはずである), プロセッサタイプとして "ARM Little-Endian" を選択する. 
+
+![Open New File in IDA](Images/Chapters/0x05c/IDA_open_file.jpg)
+
+ファイルが開いたら, 左側にある "Functions" ウインドウをクリックし, サーチダイアログを開くために `Alt+t` を押す. その後, "java" を入力してエンターを押す. これで `Java_sg_vantagepoint_helloworld_MainActivity_stringFromJNI` 関数がハイライトされるはずである. その関数をダブルクリックし, disassembly ウインドウのそのアドレスにジャンプする. 今, "Ida View-A" はその関数の逆アセンブリを指し示しているはずである. 
+
+![Hello World Disassembly](Images/Chapters/0x05c/helloworld_stringfromjni.jpg)
+
+コードは少ないが, 解析する必要がある. はじめに知っておく必要があるのは, 全ての JNI に引き渡される第一変数が, JNI インタフェイスポインタであるということである. インタフェイスポインタは, ポインタのポインタである. このポインタは, 関数テーブル(さらに多くのポインタの配列)を指し示し,  それぞれが JNI インタフェイス関数を指し示している(頭はまだ回転していますか？). 関数テーブルは, Java VM によって初期化され, ネイティブ関数が Java 環境とやり取りできるようにする. 
+
+![JNI Interface](Images/Chapters/0x05c/JNI_interface.png)
+
+そのことを念頭において, アセンブリコードの各行を見ていこう. 
+
+```
+LDR  R2, [R0]
+```
+
+注意: 第一変数(R0)は, JNI 関数テーブルポインタへのポインタである. `LDR` 命令は, この関数テーブルポインタを R2 にロードする. 
+
+```
+LDR  R1, =aHelloFromC
+```
+
+この命令は, 文字列 "Hello from C++." の PC 相対オフセットを R1 にロードする. この文字列は, オフセット0xe84 で関数ブロックの終了後すぐ来ることに注意すること. プログラムカウンタと比較してアドレス指定は, メモリの位置とは無関係にコードを実行できる. 
+
+```
+LDR.W  R2, [R2, #0x29C]
+```
+
+この命令は, 0x29C から R2 によって指し示されている JNI 関数ポインタテーブルに関数ポインタをロードする. これは `NewStringUTF` 関数である. Android NDK に含まれている jni.h で関数ポインタのリストを見ることができる. 関数プロトタイプは次のようなものである: 
+
+```
+jstring     (*NewStringUTF)(JNIEnv*, const char*);
+```
+
+上記の関数は, 2つの変数を受け取る: それは, JNIEnv ポインタ(すでに R0 にある)と文字列ポインタである. 次に, PC の現在の値は R1 に加えられ, 静的文字列 "Hello from C++"(PC + offset) の絶対アドレスの結果となる. 
+
+```
+ADD  R1, PC
+```
+
+最後に, プログラムは R2 にロードされた `NewStringUTF` 関数ポインタへの分岐命令を実行する. 
+
+```
+BX   R2
+```
+
+関数が返されるとき, R0 は新たに構成された UTF 文字列へのポインタを含んでいる. これは最終的な返り値なので, R0 は変更されないまま関数が返る. 
+
+
+#### デバッグとトレース
+
+今まででは, 対象アプリを実行せずに静的解析技術を使用してきた. 現実の世界では, 特にマルウェアやより複雑なアプリを解析するときでは, 純粋な静的解析は非常に困難である. 実行中のアプリの観察して操作することは, その振る舞いの解読をずっと簡単にする. 次に, これをするのに役立つ動的解析方法に注目していく. 
+
+Android アプリは, 2つの異なるタイプのデバッグをサポートしている: それは, Java Debug Wire Protocol (JDWP) を用いた Java ランタイムレベルのデバッグとネイティブ層での Linux/Unix スタイルの ptrace ベースのデバッグの2つであり, 両方ともリバースエンジニアに有益なものである. 
+
+##### デバッグリリースのアプリ
+
+Dalvik と ART は, デバッガと デバッグする Java 仮想マシン (VM) 間の通信プロトコルである JDWP をサポートする. JDWPは, JDB, JEB, IntelliJ, Eclipse などを含む全てのコマンドラインツールや Java IDE によってサポートされている標準のデバッグプロトコルである. また, JDWP の Android の実装は, Dalvik デバッグモニタサーバ (DDMS) によって実装された余分な機能をサポートするためのフックを含んでいる. JDWP デバッガヲ用いることで, Java コードをステップ実行したり, Java メソッド上にブレイクポイントをセットしたり, ローカル変数やインスタンス変数を検査・改ざんしたりすることができる. "通常の" Android アプリ(たとえば, アプリがネイティブライブラリの呼び出しをあまり行わないような)をデバッグするほとんどの場合に JDWP デバッガを使用することができるだろう. 
+
+次のセクションでは, JDB のみを用いて Android Level 1 の UnCrakable アプリを解決する方法を示す. これは crackme を解決する *効率的な* 方法ではないことに注意すること. Fridaや他の方法を用いることでずっと早く行うことができる. その方法については, 後ほど紹介する. しかしながら, これは Java デバッガの機能の入門として役に立つ. 
+
+
+###### リパック(再パッケージ化)
+
+全てのデバッガ有効なプロセスは, JDWP プロトコルパケットを処理するために追加のスレッドを実行する. このスレッドは, マニフェストファイルの `<application>` 要素で `android:debuggable="true"` タグがセットされているアプリでのみ起動する. これは, エンドユーザに届けられる Android 端末の典型的な設定である. 
+
+リバースエンジニアリングアプリの場合, 大抵は対象アプリのリリースビルドのみアクセスするだろう. リリースビルドは, デバッグすることを意図していない. 結局のところ, デバッグは *デバッグビルド* の目的である. システムプロパティ `ro.debuggable` が "0" にセットされているなら, Android はリリースビルドの JDWP やネイティブデバッグの両方を禁止している. バイパスするのは簡単だが, まだラインブレイクポイントの欠如などの制限に遭遇する可能性がある. それでもなお, 不完全なデバッガでさえ, まだかけがえのないツールである. プログラムの実行時の状態を調査することができることは, プログラムを *ずっと* 簡単に理解することができる. 
+
+リリースビルドをデバッグビルドに "変換" するためには, アプリのマニフェストファイルにあるフラグを改ざんする必要がある. この改ざんにより, コード署名が破壊されるため, 改ざんされた APK アーカイブを再署名する必要もある. 
+
+再署名のために, まずコード署名証明書が必要となる. 前にAndroid Studio でプロジェクトをビルドしたことがあるのであれば, IDE は既にデバッグキーストアと証明書を `$HOME/.android/debug.keystore` に生成している. このキーストアのデフォルトパスワードは "android" であり, その鍵は "androiddebugkey" と呼ばれる. 
+
+標準的な Java ディストリビューションは, キーストアと証明書を管理するために `keytool` を含んでいる. 独自の署名証明書と鍵を生成し, それをデバッグキーストアに追加することができる. 
+
+```
+$ keytool -genkey -v -keystore ~/.android/debug.keystore -alias signkey -keyalg RSA -keysize 2048 -validity 20000
+```
+
+証明書が利用可能になったら, 以下の手順に従って, UnCrackable-Level1.apk をリパックすることができる. Android Studio ビルドツールのディレクトリは path に含まれていなければならないことに注意すること. ディレクトリのパスは, `[SDK-Path]/build-tools/[version]` である. `zipalign` や `apksigner` のツールは, そのディレクトリに存在している. 
+
+1. `apktool` を用いてアプリを展開し, AndroidManifest.xml をデコードする: 
+
+```bash
+$ apktool d --no-src UnCrackable-Level1.apk
+```
+
+2. テキストエディタを用いてマニフェストに android:debuggable = "true" を追記する: 
+
+```xml
+<application android:allowBackup="true" android:debuggable="true" android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:name="com.xxx.xxx.xxx" android:theme="@style/AppTheme">
+```
+
+注意: これを `apktool` で自動的に行うためには, APK をビルドする際に, `-d` または `--debug` フラグを使用する. これによって, AndroidManifest ファイルに `debuggable="true"` が追加される. 
+
+3. APKのリパックと署名
+
+```bash
+$ cd UnCrackable-Level1
+$ apktool b
+$ zipalign -v 4 dist/UnCrackable-Level1.apk ../UnCrackable-Repackaged.apk
+$ cd ..
+$ apksigner sign --ks  ~/.android/debug.keystore --ks-key-alias signkey UnCrackable-Repackaged.apk
+```
+
+注意: `apksigner` で JRE の互換性の問題が起きた場合, 代わりに `jarsigner` を使用することができる. これを実行すると, `zipalign` は署名の *後に* 呼び出される. 
+
+```bash
+$ jarsigner -verbose -keystore ~/.android/debug.keystore UnCrackable-Repackaged.apk signkey
+$ zipalign -v 4 dist/UnCrackable-Level1.apk ../UnCrackable-Repackaged.apk
+```
+
+4. アプリの再インストール:
+
+```bash
+$ adb install UnCrackable-Repackaged.apk
+```
+
+
+##### "Wait For Debugger" 機能
+
+UnCrackable アプリは間抜けではない: デバッグモードで実行していることに気付き, シャットダウンによって反応を示す. モーダル・ダイアログがすぐに表示され, "OK" をタップすると crackme はすぐに終了する. 
+
+幸いにも, Android の "Developer options" には, 便利な "Wait for Debugger" 機能が含まれている. これは, JDWP デバッガが接続されるまで起動するアプリを自動的にサスペンドできるようになるものである. この機能を使用することで, 検出メカニズムが実行される前にデバッガを接続することができ, メカニズムをトレース, デバッグ, 解除することができる. これは本当に不公平なアドバンテージだが, その一方で, リバースエンジニアは決して公平にプレイすることはない. 
+
+
+![Debugger Detection](Images/Chapters/0x05c/debugger_detection.jpg)
+
+開発者オプションで, デバッグするアプリケーションとして `Uncrackable1` を選択し, "Wait for Debugger" スイッチを有効にする. 
+
+![Developer Options](Images/Chapters/0x05c/developer-options.jpg)
+
+注意: `default.prop` に `ro.debuggable` が 1 にセットされていても, マニフェストで  `android:debuggable` フラグが `true` にセットされていない限り, アプリは "debug app" リストに現れない.  
 
 
