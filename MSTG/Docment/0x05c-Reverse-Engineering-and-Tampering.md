@@ -444,3 +444,201 @@ UnCrackable アプリは間抜けではない: デバッグモードで実行し
 
 注意: `default.prop` に `ro.debuggable` が 1 にセットされていても, マニフェストで  `android:debuggable` フラグが `true` にセットされていない限り, アプリは "debug app" リストに現れない. 
 
+
+##### Android デバッグブリッジ
+
+Android SDK に付属している `adb` コマンドラインツールは, ローカル開発環境と接続された Android デバイス間のギャップを埋める. 
+
+通常, エミュレータもしくは USB を介して接続されたデバイスでアプリのデバッグを行う. `adb devices` コマンドを使用することで, 接続されたデバイスをリストが表示される. 
+
+```bash
+$ adb devices
+List of devices attached
+090c285c0b97f748  device
+```
+
+The `adb jdwp` command lists the process ids of all debuggable processes running on the connected device 
+`adb jdwp` コマンドは, 接続されたデバイスで実行している全てのデバッグ可能なプロセスのプロセス ID のリストを表示する(つまり, JDWP トランスポートをホストしているプロセス). `adb forward` コマンドを使用することで, ホストマシンで listen 状態のソケットを開き, ソケットの着信 TCP コネクションを選択されたプロセスの JDWP トランスポートへ転送することができる. 
+
+```bash
+$ adb jdwp
+12167
+$ adb forward tcp:7777 jdwp:12167
+```
+
+今, JDB をアタッチする準備が整った. しかしながら, デバッガをアタッチするとアプリが再開されるが, これは望ましくない. 初めに探索できるように, 中断された状態にしておきたい. プロセスが再開しないようにするために, jdb に `suspend` コマンドをパイプする. 
+
+```bash
+$ { echo "suspend"; cat; } | jdb -attach localhost:7777
+Initializing jdb ...
+> All threads suspended.
+>
+```
+
+今, 中断されたプロセスにアタッチし, jdb コマンドを開始する準備が整った. `?` を入力することで, コマンドの完全なリストを表示することができる. 残念なことに, Android VM は利用可能な全ての JDWP 機能をサポートしているわけではない. たとえば, クラスコードを再定義できる `redefine` コマンドはサポートしてない. もう一つの重要な制限は, リリースバイトコードがライン情報を含んでいないため, ラインブレイクポイントが動作しない. しかしながら, メソッドブレイクポイントは動作する. 以下のような便利な操作コマンドを含んでいる: 
+
+- *classes: ロードされたクラス全てのリストを表示する
+- class/method/fields <class id>: クラスに関する詳細を表示し, メソッドとフィールドのリストを表示する
+- locals: 現在のスタックフレーム内のローカル変数を表示する
+- print/dump <expr>: オブジェクトに関する情報を表示する
+- stop in <method>: メソッドブレイクポイントをセットする
+- clear <method>: メソッドブレイクポイントを削除する
+- set <lvalue> = <expr>:  新たな値を field/variable/array 要素に割り当てる
+
+UnCrackable App Level 1 からデコンパイルされたコードを再考し, 可能な解決策に関して考えてみよう. 良いアプローチは, 秘密の文字列を読み取ることができるように, 平文で変数に保持されている状態でアプリを中断することである. 残念なことに, 初めに root/改ざん検知に対処しない限り, それを行うことはできない
+
+コードを再調査すると, メソッド `sg.vantagepoint.uncrackable1.MainActivity.a` が, "This in unacceptable..." というメッセージボックスを表示していることを確認できる. このメソッドは, `AlertDialog` を生成し,  `onClick` イベントのためのリスナークラスをセットする. このクラス(`b` と名付けられた)には, ユーザが "OK" ボタンをタップするとすぐにアプリを終了させるコールバッグメソッドが実装されている. ユーザが単にダイアログをキャンセルできないようにするために, `setCancelable` メソッドが呼び出される. 
+
+```java
+  private void a(final String title) {
+        final AlertDialog create = new AlertDialog$Builder((Context)this).create();
+        create.setTitle((CharSequence)title);
+        create.setMessage((CharSequence)"This in unacceptable. The app is now going to exit.");
+        create.setButton(-3, (CharSequence)"OK", (DialogInterface$OnClickListener)new b(this));
+        create.setCancelable(false);
+        create.show();
+    }
+```
+
+わずかな実行時の改ざんで, これをバイパスすることができる. まだアプリが中断している状態で, メソッドブレイクポイントを `android.app.Dialog.setCancelable` にセットし, アプリを再開する. 
+
+```
+> stop in android.app.Dialog.setCancelable
+Set breakpoint android.app.Dialog.setCancelable
+> resume
+All threads resumed.
+>
+Breakpoint hit: "thread=main", android.app.Dialog.setCancelable(), line=1,110 bci=0
+main[1]
+```
+
+今, アプリは `setCancelable` メソッドの最初の命令で中断される. `locals` コマンドを用いて `setCancelable` に引き渡された変数を表示することができる(変数は "local variables" の下に誤って表示される). 
+
+```
+main[1] locals
+Method arguments:
+Local variables:
+flag = true
+```
+
+`setCancelable(true)` が呼び出されたため, これは我々が探している呼び出しではない. `resume` コマンドを用いてプロセスを再開させる. 
+
+```
+main[1] resume
+Breakpoint hit: "thread=main", android.app.Dialog.setCancelable(), line=1,110 bci=0
+main[1] locals
+flag = false
+```
+
+今, 変数 `false` を用いて `setCancelable` への呼び出しに到達した. `set` コマンドを用いて変数を true にセットして再開する. 
+
+```
+main[1] set flag = true
+ flag = true = true
+main[1] resume
+```
+
+このプロセスを繰り返して, 最終的にアラートボックスが表示されるまで, ブレイクポイントに到達するたびに `flag` を `true` にセットする(ブレイクポイントは5回か6回到達するだろう). 今, アラートボックスはキャンセルできるようになっているはずだ. ボックスの隣にある画面をタップすると, アプリが終了することなくクローズするだろう. 
+
+耐タンパーが片付いたので, 秘密の文字列を抽出する準備が整った. "静的解析" のセクションで, 文字列が AES を用いて復号され, その後メッセージボックスの入力文字と比較していることを確認した. 
+
+`java.lang.String` クラスのメソッド `equals` は, 入力文字列と秘密の文字列を比較する. `java.lang.String.equals` 上でメソッドブレイクポイントを設定し, 編集フィールドに任意のテキスト文字列を入力し, "verify" ボタンをタップする. 
+
+ブレイクポイントが到達したらすぐに, `locals` を用いてメソッド変数を読み込むことができる. 
+
+```
+> stop in java.lang.String.equals
+Set breakpoint java.lang.String.equals
+>    
+Breakpoint hit: "thread=main", java.lang.String.equals(), line=639 bci=2
+
+main[1] locals
+Method arguments:
+Local variables:
+other = "radiusGravity"
+main[1] cont
+
+Breakpoint hit: "thread=main", java.lang.String.equals(), line=639 bci=2
+
+main[1] locals
+Method arguments:
+Local variables:
+other = "I want to believe"
+main[1] cont     
+```
+
+これは探していた平文の文字列である. 
+
+
+###### IDE を用いたデバッグ
+
+デコンパイルされたソースを用いて IDE でプロジェクトをセットアップすることは, ソースコードに直接メソッドブレイクポイントをセットできるようになる巧妙な手段である. ほとんどの場合で, アプリを通してシングルステップで実行でき, GUI を用いて変数の状態を調査することができる. その認識は完ぺきではないだろう. 何しろそれはオリジナルのソースコードではないため, ラインブレイクポイントをセットすることができず, 単に正確に動作しないこともあるのだから. 
+
+とはいっても, コードをリバーシングすることは決して簡単ではないし, プレーンオールド Java コードを効率的にナビゲートしデバッグすることは非常に便利な方法である. 同様のメソッドは, [NetSPI blog](https://blog.netspi.com/attacking-android-applications-with-debuggers/ "NetSPI Blog - Attacking Android Applications with Debuggers")で紹介されている. 
+
+IDE デバッグをセットアップするために, 最初に IntelliJ でAndroid プロジェクトを作成し,  "Statically Analyzing Java Code" セクションで前述したように, ソースフォルダの中にでコンパイルされた Java ソースコードをコピーする. デバイスで, "Developer options" の "debug app" としてアプリを選択し(このチュートリアルの Uncrackable1), "Wait For Debugger" 機能がオンになっていることを確認する. 
+
+ランチャーから Uncrackable アプリのアイコンをタップすると, "wait for a debugger" モードで中断する. 
+
+![Waiting for Debugger](Images/Chapters/0x05c/waitfordebugger.png)
+
+今, ブレイクポイントをセットし, "Attach Debugger" ツールバーボタンを用いて Uncrackable1 アプリのプロセスにアタッチすることができる. 
+
+![Set breakpoint and attach debugger](Images/Chapters/0x05c/set_breakpoint_and_attach_debugger.png)
+
+デコンパイルされたソースコードからアプリをデバッグするときは, メソッドブレイクポイントだけが動作することに注意すること.  メソッドブレイクポイントが到達すると, メソッド実行中にシングルステップ実行する機会を得る. 
+
+![Choose Process](Images/Chapters/0x05c/Choose_Process.png)
+
+リストから Uncrackable1 アプリケーションを選択した後に, デバッガがアプリプロセスにアタッチし, `onCreate()` メソッドでセットされたブレイクポイントに到達するだろう. Uncrackable1 アプリは, `onCreate()` メソッドなしにアンチデバッグ制御や耐タンパー制御をトリガーする. そのため, 耐タンパーチェックやアンチデバッグチェックが実行される直前に `onCreate()` メソッドにブレイクポイントをセットすることは良い考えである. 
+
+次に, デバッガビューで "Force Step Into" をクリックすることによって `onCreate()` メソッドをシングルステップ実行する. "Force Step Into" オプションは, 通常, デバッガによって無視されるAndroid フレームワーク関数とコア Java クラスをデバッグできるようにする. 
+
+![Force Step Into](Images/Chapters/0x05c/Force_Step_Into.png)
+
+一度 "Force Step Into" すると, デバッガは次のメソッドの開始位置でストップする. その場所は, クラス `sg.vantagepoint.a.c` の `a()` メソッドである. 
+
+![Function a](Images/Chapters/0x05c/fucntion_a_of_class_sg_vantagepoint_a.png)
+
+このメソッドはディレクトリ(`/system/xbin` など)のリストとともに "su" バイナリを調査する. ルート化されたデバイス/エミュレータでアプリを実行しているため, 変数か関数の返り値を操作してチェックを無効化する必要がある. 
+
+![Function a](Images/Chapters/0x05c/fucntion_a_of_class_sg_vantagepoint_a.png)
+
+デバッガビューの "Step Over" をクリックして `a()` メソッドにステップインして通り抜けることで, "Variables" ウインドウ内のディレクトリ名を確認することができる
+
+![Step Over](Images/Chapters/0x05c/step_over.png)
+
+"Force Step Into" 機能を用いて `System.getenv` メソッドにステップインする. 
+
+コロン (,) 区切りのディレクトリ名を取得した後, デバッガのカーソルは, 次の実行可能な行ではなく `a()` メソッドの開始に返る. これはソースコードの代わりにデコンパイルされたコード上で実行していることが原因で発生する. このスキップは, デコンパイルされたアプリケーションのデバッグに重要なコードフローに従う. 
+
+コア Java や Android クラスをデバッグしたくない場合は, デバッガビューの "Step Out" をクリックすることで関数からステップアウトする. デコンパイルされたソースやコア Java 及び Android クラスの "Step Out" に到達した時点で "Force Step Into" を使用することが良い考えかもしれない. これは, コアクラス関数の返り値を監視している間, デバッグのスピードアップを手助けする. 
+![Step Out](Images/Chapters/0x05c/step_out.png)
+
+
+`a()` がディレクトリ名を取得した後, これらのディレクトリの中から `su` バイナリを検索する. このチェックを無効化するために, 検知メソッドをステップスルーし, 現在の変数を調査する. 実行が `su` バイナリを検知する場所に到達すると, F2を押すか右クリックして "Set Value" を選択することでファイル名やディレクトリ名を保持している変数の一つを改ざんする. 
+
+![Set Value](Images/Chapters/0x05c/set_value.png)
+
+![Modified Binary Name](Images/Chapters/0x05c/modified_binary_name.png)
+
+バイナリ名やディレクトリ名を改ざんしたら, `File.exists` は `false` を返すだろう. 
+
+![File Exists False](Images/Chapters/0x05c/file_exists_false.png)
+
+これは, Uncrackable App Level 1 に搭載されている最初のルート化検知制御の無効化である. 残りの耐タンパーやアンチデバッグ制御は, 最終的に秘密の文字列の検証機能に到達できるように, 同様の方法で無効化することができる. 
+
+![Anti Debugging and Tampering Defeated](Images/Chapters/0x05c/anti_debug_anti_tamper_defeated.png)
+
+![MainActivity Verify](Images/Chapters/0x05c/MainActivity_verify.png)
+
+シークレットコードは, クラス `sg.vantagepoint.uncrackable1.a` のメソッド `a()` によって検証される. ブレイクポイントに到達したときに, メソッド `a()` や "Force Step Into" にブレイクポイントをセットする. その後, `String.equals` に呼び出しに到達するまでシングルステップ実行する. これは, ユーザ入力が秘密の文字列と比較される場所である. 
+
+
+![Set Breakpoint](Images/Chapters/0x05c/sg_vantagepoint_uncrackable1_a_function_a.png)
+
+`String.equals` メソッド呼び出しに到達したとき, "Variables" ビューで秘密の文字列を確認することができる. 
+
+![Secret String](Images/Chapters/0x05c/secret_code.png)
+
+![Success](Images/Chapters/0x05c/success.png)
