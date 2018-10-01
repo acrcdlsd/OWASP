@@ -642,3 +642,131 @@ IDE デバッグをセットアップするために, 最初に IntelliJ でAndr
 ![Secret String](Images/Chapters/0x05c/secret_code.png)
 
 ![Success](Images/Chapters/0x05c/success.png)
+
+
+##### ネイティブコードのデバッグ
+
+アンドロイドのネイティブコードは, ELF 共有ライブラリにパックされており, 他のネイティブの Linux プログラムと同様に実行される. それ故, デバイスのプロセッサアーキテクチャがサポートされているのであれば(ほとんどのデバイスは, ARM チップセットに基づいているため, 通常は問題ない), 標準ツール(GDB および, IDA Pro, JEB などのビルドイン IDE デバッガを含む)を用いてデバッグすることができる. 
+
+デバッグするために, JNI デモアプリ(HelloWorld-JNI.apk)をセットアップしてみよう. これは, "Statically Analyzing Native Code" でダウンロードしたのと同じ APK である. `adb install` でデバイスやエミュレータにアプリをインストールする. 
+
+```bash
+$ adb install HelloWorld-JNI.apk
+```
+
+本章の初めの手順に従った場合, すでに Android NDK を手に入れているはずである. これには, 様々なアーキテクチャ用の gdbserver のあらかじめビルドされたバージョンが含まれている. デバイスに gdbserver のバイナリをコピーする. 
+
+```bash
+$ adb push $NDK/prebuilt/android-arm/gdbserver/gdbserver /data/local/tmp
+```
+
+`gdbserver --attach`commandは, gdbserver が実行中のプロセスにアタッチし, `comm` で指定されてた IP アドレスやポートにバインドする. この場合, HOST:PORT 記述子である. デバイスで, HelloWorld-JNI を起動し, 次にデバイスに接続して HelloWorld プロセスの PID を特定する. その後, root ユーザに切り替え, `gdbserver` をアタッチする: 
+
+```bash
+$ adb shell
+$ ps | grep helloworld
+u0_a164   12690 201   1533400 51692 ffffffff 00000000 S sg.vantagepoint.helloworldjni
+$ su
+# /data/local/tmp/gdbserver --attach localhost:1234 12690
+Attached; pid = 12690
+Listening on port 1234
+```
+
+プロセスが中断し, `gdbserver` は, `1234` ポートでクライアントのデバッグをリッスンする. USB を介して接続されたデバイスを用いて, `abd forward` コマンドでこのポートをホストのローカルポートに転送することができる. 
+
+```bash
+$ adb forward tcp:1234 tcp:1234
+```
+
+今, NDK ツールチェインに含まれた `gdb` のあらかじめビルドされたバージョンを使用することができるだろう(まだ使用できない場合は, 上述した手順に従ってインストールすること). 
+
+```
+$ $TOOLCHAIN/bin/gdb libnative-lib.so
+GNU gdb (GDB) 7.11
+(...)
+Reading symbols from libnative-lib.so...(no debugging symbols found)...done.
+(gdb) target remote :1234
+Remote debugging using :1234
+0xb6e0f124 in ?? ()
+```
+
+うまくプロセスにアタッチされている. 唯一の問題は, JNI 関数 `StringFromJNI` をデバッグするにはすでに遅すぎるということである. つまり, それは起動時に一度だけ実行される. "Wait for Debugger" オプションを起動することで, この問題を解決することができる. "Developer Options" → "Select debug app" と進み, HelloWorldJNI を選択し, 次に "Wait for debugger" スイッチを有効にする. その後, アプリを終了して再開する. アプリは自動的に中断されるはずだ. 
+
+我々の目的は, アプリが再開する前にネイティブ関数 `Java_sg_vantagepoint_helloworldjni_MainActivity_stringFromJNI` の最初の命令でブレイクポイントをセットすることである. 残念ながら, `libnative-lib.so` はプロセスメモリ内にまだマッピングされていないため, 実行のこの時点では可能ではない. それは, 実行時に動的にロードされる. この作業をするために, 初めに JDB を使用してプロセスを望まれた状態に徐々に変更する. 
+
+まず初めに, JDB にアタッチすることによって, Java VM の実行を再開する. プロセスをすぐに再開したくないので, JDB に `suspend` をパイプする. 
+
+```bash
+$ adb jdwp
+14342
+$ adb forward tcp:7777 jdwp:14342
+$ { echo "suspend"; cat; } | jdb -attach localhost:7777
+```
+
+次に, Java ランタイムが `libnative-lib.so` をロードする場所のプロセスを中断する. JDBで, `java.lang.System.loadLibrary` メソッドにブレイクポイントをセットしてプロセスを再開する. ブレイクポイントが到達した後, `loadLibrary()` が返るまでプロセスを再開する `step up` コマンドを実行する. このポイントで, `libnative-lib.so` はロードされた. 
+
+```
+> stop in java.lang.System.loadLibrary
+> resume
+All threads resumed.
+Breakpoint hit: "thread=main", java.lang.System.loadLibrary(), line=988 bci=0
+> step up
+main[1] step up
+>
+Step completed: "thread=main", sg.vantagepoint.helloworldjni.MainActivity.<clinit>(), line=12 bci=5
+
+main[1]
+```
+
+`gdbserver` を実行し, 中断されたアプリにアタッチする. Java VM と Linux カーネル両方によって, アプリが中断させられるだろう("double-suspension" の状態が生成される). 
+
+
+```bash
+$ adb forward tcp:1234 tcp:1234
+$ $TOOLCHAIN/arm-linux-androideabi-gdb libnative-lib.so
+GNU gdb (GDB) 7.7
+Copyright (C) 2014 Free Software Foundation, Inc.
+(...)
+(gdb) target remote :1234
+Remote debugging using :1234
+0xb6de83b8 in ?? ()
+```
+
+JDB で `resume` コマンドを実行し, Java ランタイムの実行を再開する(JDB で行われているので, デタッチすることもできる). GDB を用いてプロセスの調査を開始することができる. `info sharedlibrary` コマンドは, libnative-lib.so に含まれているロードされたライブラリを表示する. `info functions` コマンドは, 既知の関数の全てのリストを読み出す. JNI 関数 `java_sg_vantagepoint_helloworldjni_MainActivity_stringFromJNI` は, 非デバッグシンボルとしてリストに表示されるだろう. 関数のアドレスにブレイクポイントをセットし, プロセスを再開させる. 
+
+```bash
+(gdb) info sharedlibrary
+(...)
+0xa3522e3c  0xa3523c90  Yes (*)     libnative-lib.so
+(gdb) info functions
+All defined functions:
+
+Non-debugging symbols:
+0x00000e78  Java_sg_vantagepoint_helloworldjni_MainActivity_stringFromJNI
+(...)
+0xa3522e78  Java_sg_vantagepoint_helloworldjni_MainActivity_stringFromJNI
+(...)
+(gdb) b *0xa3522e78
+Breakpoint 1 at 0xa3522e78
+(gdb) cont
+```
+
+JNI 関数の最初の命令が実行されたときに, ブレイクポイントは到達するはずである. 今, `disassemble` コマンドを使用することで, 逆アセンブルされた関数のバージョンを表示することができる. 
+
+```
+Breakpoint 1, 0xa3522e78 in Java_sg_vantagepoint_helloworldjni_MainActivity_stringFromJNI() from libnative-lib.so
+(gdb) disass $pc
+Dump of assembler code for function Java_sg_vantagepoint_helloworldjni_MainActivity_stringFromJNI:
+=> 0xa3522e78 <+0>: ldr r2, [r0, #0]
+   0xa3522e7a <+2>: ldr r1, [pc, #8]  ; (0xa3522e84 <Java_sg_vantagepoint_helloworldjni_MainActivity_stringFromJNI+12>)
+   0xa3522e7c <+4>: ldr.w r2, [r2, #668]  ; 0x29c
+   0xa3522e80 <+8>: add r1, pc
+   0xa3522e82 <+10>:  bx  r2
+   0xa3522e84 <+12>:  lsrs  r4, r7, #28
+   0xa3522e86 <+14>:  movs  r0, r0
+End of assembler dump.
+```
+
+ここからは, プログラムをシングルステップ実行したり, レジスタやメモリの内容を表示したり, それらを改ざんしたりすることで, JNI 関数を調査することができる(この場合は, 単に文字列を返すだけである). `help` コマンドを使用することで, データのデバッグ, 実行, 検査に関するより多くの情報を取得することができる. 
+
+
