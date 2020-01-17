@@ -1,57 +1,57 @@
-API7:2019 Security Misconfiguration (�Z�L�����e�B�ݒ�~�X)
+API7:2019 Security Misconfiguration (セキュリティ設定ミス)
 ===================================
 
-| ���ЃG�[�W�F���g/�U���o�H | �Z�L�����e�B��̎�_ | �e�� |
+| 脅威エージェント/攻撃経路 | セキュリティ上の弱点 | 影響 |
 | - | - | - |
-| API �ˑ� : �U����Փx **3** | �����x **3** : ���o��Փx **3** | �Z�p�I�e�� **2** : �r�W�l�X�ˑ� |
-| Attackers will often attempt to find unpatched flaws, common endpoints, or unprotected files and directories to gain unauthorized access or knowledge of the system. | Security misconfiguration can happen at any level of the API stack, from the network level to the application level. Automated tools are available to detect and exploit misconfigurations such as unnecessary services or legacy options. | Security misconfigurations can not only expose sensitive user data, but also system details that may lead to full server compromise. |
+| API 依存 : 攻撃難易度 **3** | 蔓延度 **3** : 検出難易度 **3** | 技術的影響 **2** : ビジネス依存 |
+| 攻撃者は、しばしば、パッチが適用されていない欠陥、一般的なエンドポイント、保護されていないファイルとディレクトリを見つけ、不正アクセスやシステムの情報を勝ち取ろうと試みる。 | セキュリティ設定ミスは、ネットワークレベルからアプリケーションレベルまで、API スタックのどのレベルでも起こる可能性がある。自動化ツールは、不要なサービスやレガシーオプションなどの設定ミスの検出や悪用に利用することができる。 | セキュリティ設定のミスは、機微なユーザデータを公開するだけではなく、完全なサーバ侵害につながる恐れのあるシステム詳細を公開する可能性もある。 |
 
-## API ���Ǝォ�ǂ����̊m�F
+## API が脆弱かどうかの確認
 
-�ȉ��̏ꍇ�AAPI �͐Ǝ�ł���\��������B
+以下の場合、API は脆弱である可能性がある。
 
-* �K�؂ȃZ�L�����e�B�n�[�h�j���O���A�A�v���P�[�V�����X�^�b�N�̂����镔���ł����Ă���A�������̓N���E�h�T�[�r�X�ŕs�K�؂ɐݒ肳�ꂽ�p�[�~�b�V����������ꍇ
-* �ŐV�̃Z�L�����e�B�p�b�`���K�p����Ă��Ȃ��A�������̓V�X�e�����Â��B
-* �s�v�ȋ@�\���L��������Ă��� (���Ƃ��΁AHTTP ���\�b�h)�B
-* �g�����X�|�[�g�w�Z�L�����e�B (TLS) �������Ă���B
-* �Z�L�����e�B�f�B���N�e�B�u�́A�N���C�A���g�ɑ��M����Ȃ� (���Ƃ��΁A[Security Headers][1])�B
-* �N���X�I���W�����\�[�X���L (CORS) �|���V�[�������Ă���A�������͕s�K�؂ɐݒ肳��Ă���B
-* �G���[���b�Z�[�W�ɃX�^�b�N�g���[�X���܂܂�Ă���A�������͑��̋@����񂪌��J����Ă���B
+* 適切なセキュリティハードニングが、アプリケーションスタックのあらゆる部分でかけている、もしくはクラウドサービスで不適切に設定されたパーミッションがある場合
+* 最新のセキュリティパッチが適用されていない、もしくはシステムが古い。
+* 不要な機能が有効化されている (たとえば、HTTP メソッド)。
+* トランスポート層セキュリティ (TLS) が欠けている。
+* セキュリティディレクティブは、クライアントに送信されない (たとえば、[Security Headers][1])。
+* クロスオリジンリソース共有 (CORS) ポリシーが欠けている、もしくは不適切に設定されている。
+* エラーメッセージにスタックトレースが含まれている、もしくは他の機微情報が公開されている。
 
-## �U���V�i���I��
+## 攻撃シナリオ例
 
-### �V�i���I #1
+### シナリオ #1
 
-�U���҂́A`.bash_history` �t�@�C�����T�[�o�̃��[�g�f�B���N�g���̉��ɂ��邱�ƂɋC�t���B�����Ă��̃t�@�C���́ADevOps �`�[���� API �ɃA�N�Z�X���邽�߂Ɏg�p����R�}���h���܂܂�Ă���B
+攻撃者は、`.bash_history` ファイルがサーバのルートディレクトリの下にあることに気付く。そしてそのファイルは、DevOps チームが API にアクセスするために使用するコマンドが含まれている。
 
 ```
 $ curl -X GET 'https://api.server/endpoint/' -H 'authorization: Basic Zm9vOmJhcg=='
 ```
 
-�U���҂́ADevOps �`�[���ɂ���Ă̂ݎg�p����A�h�L�������g������Ă��Ȃ� API �ŐV���ȃG���h�|�C���g�������邩������Ȃ��B
+攻撃者は、DevOps チームによってのみ使用され、ドキュメント化されていない API で新たなエンドポイントを見つけるかもしれない。
 
-### �V�i���I #2
+### シナリオ #2
 
-����̃T�[�r�X���^�[�Q�b�g�Ƃ��邽�߂ɁA�U���҂͈�ʓI�Ȍ����G���W�����g�p���āA�C���^�[�l�b�g���璼�ڃA�N�Z�X�\�ȃR���s���[�^��T���o���B�U���҂́A��ʓI�ȃf�[�x�[�X�Ǘ��V�X�e�� (DBMS) �����s���Ă���A�f�t�H���g�|�[�g�����b�X�����Ă���z�X�g�������o�����B���̃z�X�g�̓f�t�H���g�ݒ���g�p���Ă���A���̃f�t�H���g�ݒ�ł͔F�؂������ɂȂ��Ă������߁A�U���҂� PII�A�l�̚n�D�A�F�؃f�[�^���܂ސ��S���̃��R�[�h�ւ̃A�N�Z�X��������������B
+特定のサービスをターゲットとするために、攻撃者は一般的な検索エンジンを使用して、インターネットから直接アクセス可能なコンピュータを探し出す。攻撃者は、一般的なデーベース管理システム (DBMS) を実行しており、デフォルトポートをリッスンしているホストを見つけ出した。そのホストはデフォルト設定を使用しており、そのデフォルト設定では認証が無効になっていたため、攻撃者は PII、個人の嗜好、認証データを含む数百万のレコードへのアクセス権を勝ち取った。
 
-### �V�i���I #3
+### シナリオ #3
 
-���o�C���A�v���P�[�V�����̃g���t�B�b�N�𒲍����邱�ƂŁA�U���҂͑S�Ă� HTTP �g���t�B�b�N���Z�L���A�ȃv���g�R�� (���Ƃ��΁ATLS) �Ŏ�������Ă���킯�ł͂Ȃ����Ƃ�˂��~�߂�B�U���҂́A���ɁA�v���t�@�C���摜�̃_�E���[�h�Ɋւ��āA���̂��Ƃ������ł��邱�ƂɋC�t���BAPI �g���t�B�b�N���Z�L���A�v���g�R���Ŏ�������Ă��鎖���ɂ�������炸�A���[�U�C���^���N�V�����̓o�C�i���ł��邽�߁A�U���҂� API ���X�|���X�T�C�Y�̃p�^�[����������B�����Ă����p���āA�����_�����O���ꂽ�R���e���c (���Ƃ��΁A�v���t�B�[���摜) �ɑ΂��ă��[�U�̚n�D���g���b�L���O����B
+モバイルアプリケーションのトラフィックを調査することで、攻撃者は全ての HTTP トラフィックがセキュアなプロトコル (たとえば、TLS) で実装されているわけではないことを突き止める。攻撃者は、特に、プロファイル画像のダウロードに関して、このことが事実であることに気付く。API トラフィックがセキュアプロトコルで実装されている事実にもかかわらず、ユーザインタラクションはバイナリであるため、攻撃者は API レスポンスサイズのパターンを見つける。そしてそれを用いて、レンダリングされたコンテンツ (たとえば、プロフィール画像) に対してユーザの嗜好をトラッキングする。
 
-## �΍����@
+## 対策方法
 
-API ���C�t�T�C�N���͈ȉ����܂ނׂ��ł���B
+API ライフサイクルは以下を含むべきである。
 
-* �K�؂Ƀ��b�N�_�E�����ꂽ���̐v�����ȒP�ȃf�v���C�ɂȂ��锽���\�ȃn�[�h�j���O�v���Z�X
-* API �X�^�b�N�S�̂̐ݒ�����r���[�A�A�b�v�f�[�g���邽�߂̃^�X�N�B���r���[�ɂ́A�\���t�@�C���AAPI �R���|�[�l���g�A�N���E�h�T�[�r�X (���Ƃ��΁AS3 �o�P�b�g�̃p�[�~�b�V����) ���܂܂�Ă���ׂ��ł���B
-* �S�Ă� API �C���^���N�V�������ÓI�A�Z�b�g (���Ƃ��΁A�摜) �ɃA�N�Z�X���邽�߂̃Z�L���A�ȒʐM�`���l��
-* �S�Ă̊��̍\���Ɛݒ�̗L�����Ɍp���I�ɃA�N�Z�X���邽�߂̎��������ꂽ�v���Z�X
+* 適切にロックダウンされた環境の迅速かつ簡単なデプロイにつながる反復可能なハードニングプロセス
+* API スタック全体の設定をレビュー、アップデートするためのタスク。レビューには、構成ファイル、API コンポーネント、クラウドサービス (たとえば、S3 バケットのパーミッション) が含まれているべきである。
+* 全ての API インタラクションが静的アセット (たとえば、画像) にアクセスするためのセキュアな通信チャネル
+* 全ての環境の構成と設定の有効性に継続的にアクセスするための自動化されたプロセス
 
 
-��L�ɉ����āF
-* ��O�g���[�X�⑼�̗L�v�ȏ�񂪍U���҂ɕԐM����邱�Ƃ�h�����߂ɁA�K�p�ł���̂ł���΁A�G���[���X�|���X���܂ޑS�Ă� API ���X�|���X�y�C���[�h�X�L�[�}���`���Ď��s����B
-* API ������� HTTP ���\�b�h�ɂ���Ă̂݃A�N�Z�X�\�ł��邱�Ƃ��m�F����B���̑S�Ă� HTTP ���\�b�h (���Ƃ��΁A`HEAD`) �͖����������ׂ��ł���B
-* �u���E�U�x�[�X�̃N���C�A���g (���Ƃ��΁AWebApp �t�����g�G���h) ����̃A�N�Z�X��z�肵�Ă��� API �́A�K�؂ȃN���X�I���W�����\�[�X���L (CORS) �|���V�[����������ׂ��ł���B
+上記に加えて：
+* 例外トレースや他の有益な情報が攻撃者に返信されることを防ぐために、適用できるのであれば、エラーレスポンスを含む全ての API レスポンスペイロードスキーマを定義して実行する。
+* API が特定の HTTP メソッドによってのみアクセス可能であることを確認する。他の全ての HTTP メソッド (たとえば、`HEAD`) は無効化されるべきである。
+* ブラウザベースのクライアント (たとえば、WebApp フロントエンド) からのアクセスを想定している API は、適切なクロスオリジンリソース共有 (CORS) ポリシーを実装するべきである。
 
 
 ## References
@@ -69,7 +69,7 @@ API ���C�t�T�C�N���͈ȉ����܂ނׂ��ł���B
 * [CWE-16: Configuration][5]
 * [CWE-388: Error Handling][6]
 * [Guide to General Server Security][7], NIST
-* [Let’s Encrypt: a free, automated, and open Certificate Authority][8]
+* [Let窶冱 Encrypt: a free, automated, and open Certificate Authority][8]
 
 [1]: https://www.owasp.org/index.php/OWASP_Secure_Headers_Project
 [2]: https://www.owasp.org/index.php/Testing_for_configuration_management
