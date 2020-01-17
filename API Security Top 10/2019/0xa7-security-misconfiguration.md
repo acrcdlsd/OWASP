@@ -69,7 +69,7 @@ API ライフサイクルは以下を含むべきである。
 * [CWE-16: Configuration][5]
 * [CWE-388: Error Handling][6]
 * [Guide to General Server Security][7], NIST
-* [Let窶冱 Encrypt: a free, automated, and open Certificate Authority][8]
+* [Let's Encrypt: a free, automated, and open Certificate Authority][8]
 
 [1]: https://www.owasp.org/index.php/OWASP_Secure_Headers_Project
 [2]: https://www.owasp.org/index.php/Testing_for_configuration_management
