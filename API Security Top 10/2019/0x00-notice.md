@@ -1,12 +1,9 @@
-Notice
+注意事項
 ======
 
-This is the text version of OWASP API Security Top 10, used as source for the
-official version distributed as a Portable Document Format (PDF).
+これは OWASP API Security Top 10 の text バージョンであり、ポータブル・ドキュメント・フォーマット (PDF) として配布されるオフィシャルバージョンのソースとして用いられる。
 
-Contributions to the project such as comments, corrections, or translations
-should be done here. For details on [How To Contribute][1], please refer to
-[CONTRIBUTING.md][1].
+コメント、修正、翻訳などの本プロジェクトへの貢献はここで行う必要がある。貢献の方法に関する詳細については、[CONTRIBUTING.md][1] を参照してほしい。
 
 * Erez Yallon
 * Inon Shkedy
