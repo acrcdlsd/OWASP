@@ -1,6 +1,6 @@
 # OWASP API Security Top 10 - 2019  日本語訳
 本ドキュメントは、OWASP API Security Top 10 の有志による日本語訳です。
-オリジナルは[OWASP API Security Project - OWASP](https://www.owasp.org/index.php/OWASP_API_Security_Project)にあります。
+オリジナルは[OWASP API Security Project - OWASP](https://www.owasp.org/index.php/OWASP_API_Security_Project)、[OWASP API Security Project repo](https://github.com/OWASP/API-Security/)にあります。
 
 ## What is API Secury?
 今日のアプリ主導の世界におけるイノベーションの基本要素は API である。銀行、小売り、運輸から IoT、自動運転車両、スマートシティまで、API は現代のモバイル、SaaS、Web アプリケーションの重要な一端であり、顧客向けアプリケーション、パートナー向けアプリケーション、内部アプリケーションで垣間見ることができる。生まれながらにして、API はアプリケーションロジックや個人情報 (PII) などの機密データを公開するため、ますます攻撃者の標的となっている。安全な API なしに、急速なイノベーションは不可能であろう。
