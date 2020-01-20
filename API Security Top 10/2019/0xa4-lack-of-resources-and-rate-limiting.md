@@ -1,4 +1,4 @@
-API4:2019 Lack of Resources & Rate Limiting (リソース不足と帯域制限)
+API4:2019 Lack of Resources & Rate Limiting - リソース不足と帯域制限
 ===========================================
 
 | 脅威エージェント/攻撃経路 | セキュリティ上の弱点 | 影響 |
