@@ -1,42 +1,26 @@
-Foreword
+序文
 ========
 
-A foundational element of innovation in today’s app-driven world is the
-Application Programming Interface (API). From banks, retail, and transportation
-to IoT, autonomous vehicles, and smart cities, APIs are a critical part of
-modern mobile, SaaS, and web applications and can be found in customer-facing,
-partner-facing, and internal applications.
+今日のアプリ主導の世界における革新の基礎的要素は、アプリケーションプログラミングインタフェイス (API) である。銀行、小売り、運送から、IoT、自律走行車、スマートシティまで、API は、現代のモバイル、SaaS、Web アプリケーションの重要な部分であり、顧客向け、パートナー向け、内部アプリケーションで見ることができる。
 
-By nature, APIs expose application logic and sensitive data such as Personally
-Identifiable Information (PII) and because of this, APIs have increasingly
-become a target for attackers. Without secure APIs, rapid innovation would be
-impossible.
+性質上、API はアプリケーションロジックや個人識別情報 (PII) などの機微データを公開する。そのような理由により、API はますます攻撃者のターゲットとなっている。セキュアな API なしに、迅速な革新は不可能だろう。
 
-Although a broader web application security risks Top 10 still makes sense, due
-to their particular nature, an API-specific security risks list is required.
-API security focuses on strategies and solutions to understand and mitigate the
-unique vulnerabilities and security risks associated with APIs.
+広域の Web アプリケーションのセキュリティリスク Top10 は、未だに意義があるが、特定の本質のせいで、API 特有のセキュリティリスクのリストが必要である。API に関連している特有の脆弱性とセキュリティリスクを理解して軽減するために、API セキュリティは戦略とソリューションにフォーカスを当てている。
 
-If you're familiar with the [OWASP Top 10 Project][1], then you'll notice the
-similarities between both documents: they are intended for readability and
-adoption. If you're new to the OWASP Top 10 series, you may be better off
-reading the [API Security Risks][2] and [Methodology and Data][3] sections
-before jumping into the Top 10 list.
+[OWASP Top 10 Project][1] になじみがあるのであれば、両ドキュメントが似ていることに気付くだろう。これらのドキュメントは、読みやすさと選択を対象としている。OWASP Top 10 シリーズが初めてであれば、Top10 リストの前に、[API Security Risks][2] と [Methodology and Data][3] のセクションを読んだ方が良いだろう。
 
-You can contribute to OWASP API Security Top 10 with your questions, comments,
-and ideas at our GitHub project repository:
+GitHub のプロジェクトリポジトリで、質問、コメント、アイデアを OWASP API Security Top 10 に寄贈することができる。
 
 * https://github.com/OWASP/API-Security/issues
 * https://github.com/OWASP/API-Security/blob/master/CONTRIBUTING.md
 
-You can find the OWASP API Security Top 10 here:
+OWASP API Security Top 10 は以下で見ることができる。
 
 * https://www.owasp.org/index.php/OWASP_API_Security_Project
 * https://github.com/OWASP/API-Security
 
-We wish to thank all the contributors who made this project possible with their
-effort and contributions. They are all listed in the [Acknowledgments
-section][4]. Thank you!
+努力や貢献で本プロジェクトを可能にしてくれた全ての貢献者に感謝したいと思う。貢献者は全員、[Acknowledgments section][4] でリスト表示されている。Thank you!
+
 
 [1]: https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project
 [2]: ./0x10-api-security-risks.md
