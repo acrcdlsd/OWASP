@@ -1,46 +1,33 @@
-About OWASP
+OWASP について
 ===========
 
-The Open Web Application Security Project (OWASP) is an open community dedicated
-to enabling organizations to develop, purchase, and maintain applications and
-APIs that can be trusted.
+The Open Web Application Security Project (OWASP) は、オープンなコミュニティであり、組織がアプリケーションや API を開発、調達、メンテナンスするにあたり、それらが信頼できるようになることに専念しています。
 
-At OWASP, you'll find free and open:
+OWASP では、フリーでオープンなものとして、以下のようなものがある:
 
-* Application security tools and standards.
-* Complete books on application security testing, secure code development, and
-  secure code review.
-* Presentations and [videos][1].
-* [Cheat sheets][2] on many common topics.
-* Standard security controls and libraries.
-* [Local chapters worldwide][3].
-* Cutting edge research.
-* Extensive [conferences worldwide][4].
-* [Mailing lists][5].
+* アプリケーションセキュリティのためのツールと標準
+* アプリケーションセキュリティテスト、セキュアコード開発、セキュアコードレビューに関する完全な文献
+* プレゼンテーションや [videos][1]
+* 多くの一般的なトピックに関する [Cheat sheets][2]
+* 標準的なセキュリティコントロールとライブラリ
+* [世界的なローカルチャプタ][3].
+* 最先端の研究
+* 広範囲に及ぶ [世界規模のカンファレンス][4].
+* [メーリングリスト][5].
 
-Learn more at: [https://www.owasp.org][6].
+さらに多くの情報はこちらを参照: [https://www.owasp.org][6].
 
-All OWASP tools, documents, videos, presentations, and chapters are free and
-open to anyone interested in improving application security.
+全ての OWASP のツール、ドキュメント、ビデオ、プレゼンテーション、チャプタは、フリーでオープンなものであり、アプリケーションセキュリティの向上に興味のある人であればだれでも使用できる。
 
-We advocate approaching application security as a people, process, and
-technology problem, because the most effective approaches to application
-security require improvements in these areas.
+我々は、アプリケーションセキュリティを人、プロセス、技術の問題として主張している。なぜならば、アプリケーションセキュリティへの最も効果的なアプローチは、これらのエリアを改善することが必要だからである。
 
-OWASP is a new kind of organization. Our freedom from commercial pressures
-allows us to provide unbiased, practical, and cost-effective information about
-application security.
+OWASP は、新しい種類の組織である。商業的な圧力が存在しないことで、公平で実用的な費用対効果の高い、アプリケーションセキュリティに関する情報を提供することができる。
 
-OWASP is not affiliated with any technology company, although we support the
-informed use of commercial security technology. OWASP produces many types of
-materials in a collaborative, transparent, and open way.
+商業のセキュリティ技術をよく理解したうえで使用することは支持するが、OWASP はあらゆる技術系企業と連携していない。OWASP は、共同、透明、オープンな方法で多くの種類の資料を製作する。
 
-The OWASP Foundation is the non-profit entity that ensures the project's
-long-term success. Almost everyone associated with OWASP is a volunteer,
-including the OWASP board, chapter leaders, project leaders, and project
-members. We support innovative security research with grants and infrastructure.
+OWASP Foundation は、プロジェクトの長期的な成功を確保するための非営利な存在である。OWASP ボード、チャプターリーダー、プロジェクトリーダー、プロジェクトメンバーを含む、OWASP に関わっているほとんどの人々は、ボランティアである。我々は、助成金やインフラストラクチャを用いて革新的なセキュリティリサーチをサポートする。
 
-Come join us!
+奮ってご参加ください。
 
 ## Copyright and License
 
