@@ -1,4 +1,4 @@
-API10:2019 Insufficient Logging & Monitoring (不十分なロギングとモニタリング)
+API10:2019 Insufficient Logging & Monitoring - 不十分なロギングとモニタリング
 ============================================
 
 | 脅威エージェント/攻撃経路 | セキュリティ上の弱点 | 影響 |
