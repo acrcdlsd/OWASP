@@ -1,4 +1,4 @@
-API1:2019 Broken Object Level Authorization (オブジェクトレベルの認可の不備)
+API1:2019 Broken Object Level Authorization - オブジェクトレベルの認可の不備
 ===========================================
 
 | 脅威エージェント/攻撃経路 | セキュリティ上の弱点 | 影響 |
