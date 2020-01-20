@@ -1,4 +1,4 @@
-API9:2019 Improper Assets Management (不適切な資産管理)
+API9:2019 Improper Assets Management - 不適切な資産管理
 ====================================
 
 | 脅威エージェント/攻撃経路 | セキュリティ上の弱点 | 影響 |
