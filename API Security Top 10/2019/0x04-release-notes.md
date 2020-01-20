@@ -1,24 +1,13 @@
-Release Notes
+リリース・ノート
 =============
 
-This is the first OWASP API Security Top 10 edition, which we plan to be updated
-periodically, every three or four years.
+これは、OWASP API Security Top 10 の初版である。3 年、もしくは 4 年ごとに継続的にアップデートしていく計画だ。
 
-Unlike this version, in future versions, we want to make a public call for data,
-involving the security industry in this effort. In the [Methodology and Data][1]
-section, you'll find more details about how this version was built. For more
-details about the security risks, please refer to the [API Security Risks][2]
-section.
+本バージョンとは異なり、今後のバージョンでは、データのパブリックコールを行い、この取り組みにセキュリティ業界を取り込んでいきたいと思っている。[Methodology and Data][1] のセクションでは、本バージョンがどのように構築されたのかに関する更なる詳細を見ることができるだろう。セキュリティリスクに関する更なる詳細は、[API Security Risks][2] セクションを参照してほしい
 
-It is important to realize that over the last few years, architecture of 
-applications has significantly changed. Currently, APIs play a very important
-role in this new architecture of microservices, Single Page Applications (SPAs),
-mobile apps, IoT, etc.
+ここ数年で、アプリケーションのアーキテクチャが著しく変化したことに気付くことが重要である。シングルページアプリケーション (SPAs)、モバイルアプリ、IoT などのマイクロサービスの新たなアーキテクチャにおいて、現在、API はとても重要な役割を果たしている。
 
-The OWASP API Security Top 10 was a required effort to create awareness about
-modern API security issues. It was only possible due to a great effort of
-several volunteers, all of them listed in the [Acknowledgments][3] section.
-Thank you!
+OWASP API Security Top 10 は、現代の API セキュリティ問題に関する認知度を向上させのに必要な取り組みだった。それぞれのバランディアの素晴らしい努力のおかげでのみ可能となった。[Acknowledgments][3] セクションで全ての人がリストされている。Thank you!
 
 [1]: ./0xd0-about-data.md
 [2]: ./0x10-api-security-risks.md
