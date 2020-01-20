@@ -1,62 +1,62 @@
-API6:2019 - Mass Assignment (�ꊇ���蓖��)
+API6:2019 - Mass Assignment - 一括割り当て
 ===========================
 
-| ���ЃG�[�W�F���g/�U���o�H | �Z�L�����e�B��̎�_ | �e�� |
+| 脅威エージェント/攻撃経路 | セキュリティ上の弱点 | 影響 |
 | - | - | - |
-| API �ˑ� : �U����Փx **2** | �����x **2** : ���o��Փx **2** | �Z�p�I�e�� **2** : �r�W�l�X�ˑ� |
-| �G�N�X�v���C�g���s���ɂ́A�ʏ�A�r�W�l�X���W�b�N�A�I�u�W�F�N�g�̊֌W�AAPI �\���̗�����K�v�Ƃ��Ă���B�v���p�e�B�̖��O�ƂƂ��ɃA�v���P�[�V�����̊�{�I�Ȏ������g�p����J���Ă��邽�߁AMass Assignment �̈��p�� API ���ȒP�ł���B | ����̃t���[�����[�N�́A�J���҂ɑ΂��ăN���C�A���g����R�[�h�ϐ�������I�u�W�F�N�g�Ɏ����I�ɓ��͂��o�C���h����֐����g�p���邱�Ƃ𐄏����Ă���B�U���҂͂��̕��@��p���āA�����ĊJ���҂����J���悤�Ƃ��Ă��Ȃ��@���ȃI�u�W�F�N�g�̃v���p�e�B�̃A�b�v�f�[�g��㏑�����s�����Ƃ��ł���B | �G�N�X�v���C�g�́A�������i�A�f�[�^������A�Z�L�����e�B���J�j�Y���̃o�C�p�X�ȂǂɂȂ��鋰�ꂪ����B |
+| API 依存 : 攻撃難易度 **2** | 蔓延度 **2** : 検出難易度 **2** | 技術的影響 **2** : ビジネス依存 |
+| エクスプロイトを行うには、通常、ビジネスロジック、オブジェクトの関係、API 構造の理解を必要としている。プロパティの名前とともにアプリケーションの基本的な実装を使用上公開しているため、Mass Assignment の悪用は API より簡単である。 | 現代のフレームワークは、開発者に対してクライアントからコード変数や内部オブジェクトに自動的に入力をバインドする関数を使用することを推奨している。攻撃者はこの方法を用いて、決して開発者が公開しようとしていない機微なオブジェクトのプロパティのアップデートや上書きを行うことができる。 | エクスプロイトは、権限昇格、データ改ざん、セキュリティメカニズムのバイパスなどにつながる恐れがある。 |
 
 
-## API ���Ǝォ�ǂ����̊m�F
+## API が脆弱かどうかの確認
 
-����̃A�v���P�[�V�����̃I�u�W�F�N�g�́A�����̃v���p�e�B���܂�ł���\��������B�����̃v���p�e�B�̂������́A�N���C�A���g�ɂ���Ē��ڃA�b�v�f�[�g�����ׂ��ł��� (���Ƃ��΁A`user.first_name` �� `user.address`)�A�������̓A�b�v�f�[�g�����ׂ��ł͂Ȃ� (���Ƃ��΁A`user.is_vip` �t���O)�B
+現代のアプリケーションのオブジェクトは、多くのプロパティを含んでいる可能性がある。これらのプロパティのいくつかは、クライアントによって直接アップデートされるべきであり (たとえば、`user.first_name` や `user.address`)、いくつかはアップデートされるべきではない (たとえば、`user.is_vip` フラグ)。
 
-�����̃v���p�e�B�̋@�����ƌ��J���x���̍l���Ȃ��ɁA�N���C�A���g�p�����[�^������I�u�W�F�N�g�v���p�e�B�Ɏ����ϊ�����ꍇ�AAPI �G���h�|�C���g�͐Ǝ�ł���B����ɂ���āA�A�N�Z�X����ׂ��ł͂Ȃ��I�u�W�F�N�g�v���p�e�B���U���҂��A�b�v�f�[�g�ł���悤�ɂȂ�\��������B
+これらのプロパティの機微性と公開レベルの考慮なしに、クライアントパラメータを内部オブジェクトプロパティに自動変換する場合、API エンドポイントは脆弱である。これによって、アクセスするべきではないオブジェクトプロパティを攻撃者がアップデートできるようになる可能性がある。
 
 Examples for sensitive properties:
-�@���ȃv���p�e�B�̗�F
+機微なプロパティの例：
 
-* **�����֘A�̃v���p�e�B**: `user.is_admin` �� `user.is_vip` �́A�Ǘ��҂ɂ���Ă̂ݐݒ肳���ׂ��ł���B
-* **�v���Z�X�ˑ��̃v���p�e�B**: `user.cash` �́A�x�����m�F��A�����ł̂ݐݒ肳���ׂ��ł���B
-* **�����v���p�e�B**: `article.created_time` �́A�A�v���P�[�V�����ɂ���ē����ł̂ݐݒ肳���ׂ��ł���B
+* **権限関連のプロパティ**: `user.is_admin` や `user.is_vip` は、管理者によってのみ設定されるべきである。
+* **プロセス依存のプロパティ**: `user.cash` は、支払い確認後、内部でのみ設定されるべきである。
+* **内部プロパティ**: `article.created_time` は、アプリケーションによって内部でのみ設定されるべきである。
 
-## �U���V�i���I��
+## 攻撃シナリオ例
 
-### �V�i���I #1
+### シナリオ #1
 
-���C�h�V�F�A�����O�A�v���P�[�V�����́A�v���t�@�C���Ɋւ����{����ҏW����I�v�V���������[�U�ɒ񋟂���B���̃v���Z�X�̊Ԓ��AAPI �Ăяo���́A�ȉ��̂悤�Ȑ��K�� JSON �I�u�W�F�N�g�ƂƂ��� `PUT /api/v1/users/me` �ɑ��M�����B
+ライドシェアリングアプリケーションは、プロファイルに関する基本情報を編集するオプションをユーザに提供する。このプロセスの間中、API 呼び出しは、以下のような正規の JSON オブジェクトとともに `PUT /api/v1/users/me` に送信される。
 
 ```json
 {"user_name":"inons","age":24}
 ```
 
-���N�G�X�g `GET /api/v1/users/me` �ɂ́A�ǉ��� credit_balance �v���p�e�B���܂܂��B
+リクエスト `GET /api/v1/users/me` には、追加の credit_balance プロパティが含まれる。
 
 ```json
 {"user_name":"inons","age":24,"credit_balance":10}.
 ```
 
-�U���҂́A�ȉ��̃y�C���[�h�ƂƂ��ɏ��߂̃��N�G�X�g���đ�����B
+攻撃者は、以下のペイロードとともに初めのリクエストを再送する。
 
 ```json
 {"user_name":"attacker","age":60,"credit_balance":99999}
 ```
 
-�G���h�|�C���g�́AMass Assignment �ɑ΂��ĐƎ�ł��邽�߁A�U���҂͎x�����Ȃ��ɃN���W�b�g���󂯎��B
+エンドポイントは、Mass Assignment に対して脆弱であるため、攻撃者は支払いなしにクレジットを受け取る。
 
 
-### �V�i���I #2
+### シナリオ #2
 
-�r�f�I�V�F�A�����O�|�[�^���́A���[�U���R���e���c���A�b�v���[�h�ł���悤�ɂ��A�l�X�ȃt�H�[�}�b�g�ŃR���e���c���_�E�����[�h�ł���悤�ɂ���BAPI �𒲍������U���҂́A�G���h�|�C���g `GET /api/v1/videos/{video_id}/meta_data` ���A�r�f�I�̃v���p�e�B���܂� JSON �I�u�W�F�N�g��Ԃ����ƂɋC�t�����B���̃v���p�e�B�̈�ɁA`"mp4_conversion_params":"-v codec h264"` ������A����́A�A�v���P�[�V�������V�F���R�}���h���g�p���ăr�f�I��ϊ����Ă��邱�Ƃ��Ӗ����Ă���B
+ビデオシェアリングポータルは、ユーザがコンテンツをアップロードできるようにし、様々なフォーマットでコンテンツをダウンロードできるようにする。API を調査した攻撃者は、エンドポイント `GET /api/v1/videos/{video_id}/meta_data` が、ビデオのプロパティを含む JSON オブジェクトを返すことに気付いた。そのプロパティの一つに、`"mp4_conversion_params":"-v codec h264"` があり、それは、アプリケーションがシェルコマンドを使用してビデオを変換していることを意味している。
 
-�U���҂͂܂��A�G���h�|�C���g `POST /api/v1/videos/new` �� Mass Assignment �ɑ΂��ĐƎ�ł���A�N���C�A���g���r�f�I�I�u�W�F�N�g�̔C�ӂ̃v���p�e�B��ݒ肷�邱�Ƃ��ł��邱�Ƃɂ��C�t�����B���̍U���҂́A���ӂ���l�Ƃ��� `"mp4_conversion_params":"-v codec h264 && format C:/"` ��ݒ肷��B�U���҂� MP4 �Ƃ��ăr�f�I���_�E�����[�h����ƁA���̒l�̓V�F���R�}���h�C���W�F�N�V�����������N�������낤�B
+攻撃者はまた、エンドポイント `POST /api/v1/videos/new` が Mass Assignment に対して脆弱であり、クライアントがビデオオブジェクトの任意のプロパティを設定することができることにも気付いた。この攻撃者は、悪意ある値として `"mp4_conversion_params":"-v codec h264 && format C:/"` を設定する。攻撃者が MP4 としてビデオをダウンロードすると、この値はシェルコマンドインジェクションを引き起こすだろう。
 
-## �΍����@
+## 対策方法
 
-* �\�ł���΁A�R�[�h�ϐ�������I�u�W�F�N�g�ɃN���C�A���g�̓��͂������I�Ƀo�C���h����悤�Ȋ֐��̎g�p�������B
-* �N���C�A���g�ɂ���ăA�b�v�f�[�g�����ׂ��v���p�e�B�̂݃z���C�g���X�g�ɓo�^����
-* �N���C�A���g�ɂ���ăA�N�Z�X�����ׂ��ł͂Ȃ��v���p�e�B���u���b�N���X�g�ɓo�^���邽�߂ɑg�ݍ��݋@�\���g�p����B
-* �K�p�ł��̂ł���΁A���̓f�[�^�y�C���[�h�̃X�L�[�}�𖾊m�ɒ�`���Ď��s����
+* 可能であれば、コード変数や内部オブジェクトにクライアントの入力を自動的にバインドするような関数の使用を避ける。
+* クライアントによってアップデートされるべきプロパティのみホワイトリストに登録する
+* クライアントによってアクセスされるべきではないプロパティをブラックリストに登録するために組み込み機能を使用する。
+* 適用できのであれば、入力データペイロードのスキーマを明確に定義して実行する
 
 ## References
 
