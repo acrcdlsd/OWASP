@@ -1,4 +1,4 @@
-API7:2019 Security Misconfiguration (セキュリティ設定ミス)
+API7:2019 Security Misconfiguration - セキュリティ設定ミス
 ===================================
 
 | 脅威エージェント/攻撃経路 | セキュリティ上の弱点 | 影響 |
