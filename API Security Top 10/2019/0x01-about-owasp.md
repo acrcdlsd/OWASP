@@ -1,7 +1,7 @@
 About OWASP - OWASP について
 ===========
 
-Open Web Application Security Project (OWASP) は、オープンなコミュニティであり、組織がアプリケーションや API を開発、調達、メンテナンスするにあたり、それらが信頼できるようになることに専念しています。
+Open Web Application Security Project (OWASP) は、オープンなコミュニティであり、組織がアプリケーションや API を開発、調達、メンテナンスするにあたり、それらが信頼できるようになることに専念している。
 
 OWASP では、フリーでオープンなものとして、以下のようなものがある:
 
