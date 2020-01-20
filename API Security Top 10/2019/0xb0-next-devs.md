@@ -1,19 +1,19 @@
-�J���Ҍ����̎��̃X�e�b�v
+What's Next For Developers - 開発者向けの次のステップ
 ==========================
 
-�\�t�g�E�F�A���쐬���ĕێ炷��^�X�N�A�܂��͌��e�̃\�t�g�E�F�A�����C����^�X�N�́A����ȉ\��������B���̂��Ƃ� API �Ɋւ��Ă��ς��͂Ȃ��B
+ソフトウェアを作成して保守するタスク、または原稿のソフトウェアを改修するタスクは、困難な可能性がある。このことは API に関しても変わりはない。
 
-��X�́A����ƔF�m���Z�L���A�ȃ\�t�g�E�F�A���������߂̃L�[�t�@�N�^�ł���ƐM���Ă���B�ڕW��B�����邽�߂ɕK�v�ȑ��̑S�Ă̂��Ƃ́A**�����\�ȃZ�L�����e�B�v���Z�X�ƕW���I�ȃZ�L�����e�B����𐧒肵�Ďg�p���邱��**�Ɉˑ����Ă���B
+我々は、教育と認知がセキュアなソフトウェアを書くためのキーファクタであると信じている。目標を達成するために必要な他の全てのことは、**反復可能なセキュリティプロセスと標準的なセキュリティ制御を制定して使用すること**に依存している。
 
-OWASP �ɂ́A�v���W�F�N�g���n�܂����u�Ԃ���A�Z�L�����e�B�ɑΏ����邽�߂̖����ŃI�[�v���ȃ��\�[�X����ʂɑ��݂��Ă���B���p�\�ȃv���W�F�N�g�̕�I�ȃ��X�g�ɂ��ẮA[OWASP Projects page][1] �����ЖK��Ă��������B
+OWASP には、プロジェクトが始まった瞬間から、セキュリティに対処するための無料でオープンなリソースが大量に存在している。利用可能なプロジェクトの包括的なリストについては、[OWASP Projects page][1] をぜひ訪れてください。
 
 | | |
 |-|-|
-| **����** | ���E��֐S�ɏ����� [OWASP Education Project materials][2] ��ǂݎn�߂邱�Ƃ��ł���B�n���Y�I���w�K�Ɋւ��ẮA[���[�h�}�b�v][3] �� **crAPI** - **C**ompletely **R**idiculous **API** ��ǉ������B���̈���ŁA[OWASP DevSlop Pixi Module][4] ��p���� WebAppSec ����K���邱�Ƃ��ł���B����́A���[�U�Ɍ���� Web �A�v���P�[�V������ API �̃Z�L�����e�B�����e�X�g������@�������A�����A���Z�L���A�� API ���������@���w�΂��邽�߂̐Ǝ�� WebApp �� API �T�[�r�X�C���e���g�ł���B�܂��A[OWASP AppSec Conference][5] �̃g���[�j���O�Z�b�V�����ɎQ��������A[���[�J���x���ɎQ��][6]���邱�Ƃ��ł���B |
-| **�Z�L�����e�B�v��** | �Z�L�����e�B�͂��Ƃ��ƑS�Ẵv���W�F�N�g�̈ꕔ�ł���ׂ��ł���B�v���������o�����A���̃v���W�F�N�g�ɂƂ��� "secure" �̈Ӗ������ł��邩���`���邱�Ƃ��d�v�ł���B�Z�L�����e�B�v����ݒ肷�邽�߂̃K�C�h�Ƃ��āAOWASP �́A[OWASP Application Security Verification Standard (ASVS)][7] ��p���邱�Ƃ𐄏�����B�A�E�g�\�[�V���O����̂ł���΁A[OWASP Secure Software Contract Annex][8] ���l�����邱�Ƃ��B����́A���n�̖@����K���ɏ]���ēK������K�v������B |
-| **�Z�L�����e�B�A�[�L�e�N�`��** | �Z�L�����e�B�̓v���W�F�N�g�̑S�ẴX�e�[�W�ɂ����āA�ˑR�Ƃ��Č��O�����Ȃ܂܂ł���B[OWASP Prevention Cheat Sheets][9] �́A�A�[�L�e�N�`���t�F�[�Y�ŃZ�L�����e�B��݌v������@�Ɋւ���K�C�_���X�̂��߂̗ǂ��X�^�[�e�B���O�|�C���g�ł���B���ɂ������̂��̂����邪�A[REST Security Cheat Sheet][10] �� [REST Assessment Cheat Sheet][11] �������邱�Ƃ��ł��邾�낤�B |
-| **�W���I�ȃZ�L�����e�B����** | �W���I�ȃZ�L�����e�B�����I�����邱�Ƃ́A�Ǝ��̃��W�b�N���L�q���邱�ƂŃZ�L�����e�B�̎�_����荞��ł��܂����X�N��ጸ����B����̃t���[�����[�N�̂قƂ�ǂ́A���ʓI�ȑg�ݍ��ݐ���𓋍ڂ��Ă��邪�A[OWASP Proactive Controls][12] �́A�v���W�F�N�g�Ɋ܂߂�ׂ��Z�L�����e�B����̗L�p�ȊT�v��񋟂���B�܂�OWASP �́A���ؐ���Ȃǂ̗L�p�Ȃ������̃��C�u�����ƃc�[����񋟂���B |
-| **�Z�L���A�\�t�g�E�F�A�J�����C�t�T�C�N��** | API ���\�z����Ƃ��ɁA[OWASP Software Assurance Maturity Model (SAMM)][13] ���g�p���ăv���Z�X�����ǂ��邱�Ƃ��ł���B�������̑��� OWASP �v���W�F�N�g�́A�l�X�� API �J���t�F�[�Y�Ŗ𗧂��낤 (���Ƃ��΁A[OWASP Code Review Project][14])�B |
+| **教育** | 専門職や関心に準じて [OWASP Education Project materials][2] を読み始めることができる。ハンズオン学習に関しては、[ロードマップ][3] に **crAPI** - **C**ompletely **R**idiculous **API** を追加した。その一方で、[OWASP DevSlop Pixi Module][4] を用いて WebAppSec を練習することができる。これは、ユーザに現代の Web アプリケーションと API のセキュリティ問題をテストする方法を教え、将来、よりセキュアな API を書く方法を学ばせるための脆弱な WebApp や API サービスインテントである。また、[OWASP AppSec Conference][5] のトレーニングセッションに参加したり、[ローカル支部に参加][6]することもできる。 |
+| **セキュリティ要件** | セキュリティはもともと全てのプロジェクトの一部であるべきである。要件を引き出す時、そのプロジェクトにとって "secure" の意味が何であるかを定義することが重要である。セキュリティ要件を設定するためのガイドとして、OWASP は、[OWASP Application Security Verification Standard (ASVS)][7] を用いることを推奨する。アウトソーシングするのであれば、[OWASP Secure Software Contract Annex][8] を考慮することだ。それは、現地の法律や規制に従って適応する必要がある。 |
+| **セキュリティアーキテクチャ** | セキュリティはプロジェクトの全てのステージにおいて、依然として懸念事項なままである。[OWASP Prevention Cheat Sheets][9] は、アーキテクチャフェーズでセキュリティを設計する方法に関するガイダンスのための良いスターティングポイントである。他にも多くのものがあるが、[REST Security Cheat Sheet][10] と [REST Assessment Cheat Sheet][11] を見つけることができるだろう。 |
+| **標準的なセキュリティ制御** | 標準的なセキュリティ制御を選択することは、独自のロジックを記述することでセキュリティの弱点を取り込んでしまうリスクを低減する。現代のフレームワークのほとんどは、効果的な組み込み制御を搭載しているが、[OWASP Proactive Controls][12] は、プロジェクトに含めるべきセキュリティ制御の有用な概要を提供する。またOWASP は、検証制御などの有用ないくつかのライブラリとツールを提供する。 |
+| **セキュアソフトウェア開発ライフサイクル** | API を構築するときに、[OWASP Software Assurance Maturity Model (SAMM)][13] を使用してプロセスを改良することができる。いくつかの他の OWASP プロジェクトは、様々な API 開発フェーズで役立つだろう (たとえば、[OWASP Code Review Project][14])。 |
 
 [1]: https://www.owasp.org/index.php/Category:OWASP_Project
 [2]: https://www.owasp.org/index.php/OWASP_Education_Material_Categorized
