@@ -1,24 +1,24 @@
-��@�ƃf�[�^
+Methodology and Data - 手法とデータ
 ====================
 
-## �T�v
+## 概要
 
-AppSec �ƊE�́AAPI �͏d�v�ȃ��[�����ʂ����ŐV�̃A�v���P�[�V�����̃A�[�L�e�N�`���ɂ͂�����Əœ_�𓖂ĂĂ��Ȃ����߁A�f�[�^�̃p�u���b�N�R�[���Ɋ�Â��čł��N���e�B�J���� 10 �� API �Z�L�����e�B���X�N�̃��X�g���\�z���邱�Ƃ́A����ȍ�Ƃ������B�p�u���b�N�ȃf�[�^�R�[���͑��݂��Ȃ����A���ʂƂ��Ă����炳�ꂽ Top10 �̃��X�g�́A���ɗ��p�\�ȃf�[�^�A�Z�L�����e�B���Ƃ̍v���A�Z�L�����e�B�R�~���j�e�B�̃I�[�v���ȋc�_�Ɋ�Â��Ă���B
+AppSec 業界は、API は重要なロールを果たす最新のアプリケーションのアーキテクチャにはっきりと焦点を当てていないため、データのパブリックコールに基づいて最もクリティカルな 10 の API セキュリティリスクのリストを構築することは、困難な作業だった。パブリックなデータコールは存在しないが、結果としてもたらされた Top10 のリストは、公に利用可能なデータ、セキュリティ専門家の貢献、セキュリティコミュニティのオープンな議論に基づいている。
 
-## ��@
+## 手法
 
-���i�K�ŁAAPI �Z�L�����e�B�C���V�f���g�Ɋւ�����ɗ��p�\�ȃf�[�^�́A�Z�L�����e�B���Ƃ̃O���[�v�ɂ���Ď��W�A���r���[�A�J�e�S���C�Y���ꂽ�B�����̃f�[�^�́A�o�O�o�E���e�B�v���b�g�t�H�[����Ǝ㐫�f�[�^�x�[�X���� 1 �N�̊��ԂŎ��W����Ă���B����͓��v�Ɋւ���ړI�Ŏg�p���ꂽ�B
+第一段階で、API セキュリティインシデントに関する公に利用可能なデータは、セキュリティ専門家のグループによって収集、レビュー、カテゴライズされた。それらのデータは、バグバウンティプラットフォームや脆弱性データベースから 1 年の期間で収集されている。それは統計に関する目的で使用された。
 
-���̒i�K�ł́A�y�l�g���[�V�����e�X�g�̌o���̂���Z�L�����e�B�̎��{�҂́ATop10 ���X�g������������悤�Ɉ˗����ꂽ�B
+次の段階では、ペネトレーションテストの経験のあるセキュリティの実施者は、Top10 リストを完成させるように依頼された。
 
-[OWASP Risk Rating Methodology][1] �̓��X�N��͂��s���̂Ɏg�p���ꂽ�B���̃X�R�A�́A�Z�L�����e�B���{�ҊԂŋc�_����у��r���[���ꂽ�B�����̎����Ɋւ���l�����ׂ������ɂ��ẮA[API Security Risks][2] �Z�N�V�������Q�Ƃ̂��ƁB
+[OWASP Risk Rating Methodology][1] はリスク解析を行うのに使用された。そのスコアは、セキュリティ実施者間で議論およびレビューされた。これらの事項に関する考慮すべき事柄については、[API Security Risks][2] セクションを参照のこと。
 
-OWASP API Security Top 10 2019 �̏��߂̃h���t�g�́A���i�K�̓��v��̌��ʂƃZ�L�����e�B���{�҂̃��X�g�Ԃ̃R���Z���T�X�ɂ���Đ����Ă���B
-���̃h���t�g�́AAPI �Z�L�����e�B����Ɋ֘A����o�������Z�L�����e�B���{�҂̑��̃O���[�v�ɂ��]���ƃ��r���[�̂��߂ɒ�o���ꂽ�B
+OWASP API Security Top 10 2019 の初めのドラフトは、第一段階の統計上の結果とセキュリティ実施者のリスト間のコンセンサスによって生じている。
+このドラフトは、API セキュリティ分野に関連する経験を持つセキュリティ実施者の他のグループによる評価とレビューのために提出された。
 
-OWASP API Security Top 10 2019 �́AOWASP Global AppSec Tel Aviv (2019�N 5��) �ŏ��߂Ĕ��\���ꂽ�B���̌�A���J���_��v���̂��߂� GitHub ��ŗ��p�\�ƂȂ����B
+OWASP API Security Top 10 2019 は、OWASP Global AppSec Tel Aviv (2019年 5月) で初めて発表された。その後、公開討論や貢献のために GitHub 上で利用可能となった。
 
-�v���҂̃��X�g�́A[Acknowledgments][3] �Z�N�V�����œ��肷�邱�Ƃ��ł���B
+貢献者のリストは、[Acknowledgments][3] セクションで入手することができる。
 
 [1]: https://www.owasp.org/index.php/OWASP_Risk_Rating_Methodology
 [2]: ./0x10-api-security-risks.md
