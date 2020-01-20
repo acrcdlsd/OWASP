@@ -1,25 +1,15 @@
 API Security Risks
 ==================
 
-The [OWASP Risk Rating Methodology][1] was used to do the risk analysis.
+[OWASP Risk Rating Methodology][1] は、リスク解析を行うために使用された。以下の表は、リスクスコアに関する専門用語の要約である。
 
-The table below summarizes the terminology associated with the risk score.
-
-| Threat Agents | Exploitability | Weakness Prevalence | Weakness Detectability | Technical Impact | Business Impacts |
+| 脅威エージェント | 攻撃難易度 | 弱点の蔓延度 | 弱点の検出難易度 | 技術的影響 | ビジネス的影響 |
 | :-: | :-: | :-: | :-: | :-: | :-: |
-| API Specific | Easy: **3** | Widespread **3** | Easy **3** | Severe **3** | Business Specific |
-| API Specific | Average: **2** | Common **2** | Average **2** | Moderate **2** | Business Specific |
-| API Specific | Difficult: **1** | Difficult **1** | Difficult **1** | Minor **1** | Business Specific |
+| API 依存 | 容易: **3** | 広範囲 **3** | 容易 **3** | 深刻 **3** | ビジネス依存 |
+| API 依存 | 普通: **2** | 一般的 **2** | 普通 **2** | 中程度 **2** | ビジネス依存 |
+| API 依存 | 困難: **1** | 希少 **1** | 困難 **1** | 少ない **1** | ビジネス依存 |
 
-**Note**: This approach does not take the likelihood of the threat agent into
-account. Nor does it account for any of the various technical details associated
-with your particular application. Any of these factors could significantly
-affect the overall likelihood of an attacker finding and exploiting a particular
-vulnerability. This rating does not take into account the actual impact on your
-business. Your organization will have to decide how much security risk from
-applications and APIs the organization is willing to accept given your culture,
-industry, and regulatory environment. The purpose of the OWASP API Security Top
-10 is not to do this risk analysis for you.
+**注意**: このアプローチでは、脅威エージェントの可能性を考慮していない。特定のアプリケーションに関する様々な技術的詳細についてもまた考慮していない。これらの要素のいずれかは、攻撃者が特定の脆弱性を見つけてエクスプロイトする全体的な可能性に著しく影響を与える可能性がある。本格付けは、ビジネスに対する実際の影響を考慮していない。組織は、文化、業界、規制環境を考慮して、アプリケーションや API からどの程度のセキュリティリスクを受け入れるかを決定する必要があるだろう。OWASP API Security Top 10 の目的は、このようなリスク解析を行うことではない。
 
 ## References
 
