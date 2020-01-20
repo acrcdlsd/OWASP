@@ -1,4 +1,4 @@
-API2:2019 Broken User Authentication (認証の不備)
+API2:2019 Broken User Authentication - 認証の不備
 ====================================
 
 | 脅威エージェント/攻撃経路 | セキュリティ上の弱点 | 影響 |
