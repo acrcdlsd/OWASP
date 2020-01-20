@@ -1,4 +1,4 @@
-API5:2019 Broken Function Level Authorization (機能レベルの認可の不備)
+API5:2019 Broken Function Level Authorization - 機能レベルの認可の不備
 =============================================
 
 | 脅威エージェント/攻撃経路 | セキュリティ上の弱点 | 影響 |
