@@ -11,9 +11,6 @@ OWASP MASVS は、モバイルアプリケーションの基準となるセキ�
 
 MASVS は [OWASP Mobile Security Testing Guide](https://github.com/OWASP/owasp-mstg) の姉妹プロジェクトです。
 
-本ドキュメントは、株式会社ラック セキュリティ診断部 スマートデバイス診断グループのメンバーが中心となって日本語訳を作成しました。
-日本語訳にあたっては正確性と理解のしやすさに考慮して作業しましたが、翻訳の間違いや改良についてお気づきの点があればご指摘いただければ幸いです。
-
 Open Web Application Security Project（OWASP）は、安全なソフトウェアの設計・開発・習得・運用と維持に関する活動を支援する、非営利の団体です。
 OWASPのツールやドキュメントなど、すべての成果物は無料で利用できます。
 OWASPのホームページは http://www.owasp.org/ にあります。
