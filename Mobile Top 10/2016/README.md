@@ -16,11 +16,3 @@ OWASPのホームページは http://www.owasp.org/ にあります。
 ## Licence
 [Creative Commons Attribution-ShareAlike ](https://creativecommons.org/licenses/by-sa/4.0/)
 
-## Author（日本語訳）
- - 三井  宏弥（株式会社ラック）
- - 山本  精吾（株式会社ラック）
- - 前野  勇気（株式会社ラック） 
- - 吉川  香織（株式会社ラック）
- - 篠原  崇宏（株式会社ラック）
- - 倉持  浩明（株式会社ラック）
-
